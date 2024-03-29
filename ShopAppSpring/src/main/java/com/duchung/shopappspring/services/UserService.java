@@ -44,7 +44,8 @@ public class UserService implements IUserService {
         // If user register by facebook account or google account, we don't need password
         if (userDTO.getFacebookAccountId() == 0 && userDTO.getGoogleAccountId() == 0) {
             String password = userDTO.getPassword();
-            String encodedPassword = 
+            String encodedPassword = passwordEncoder.encode(password);
+            newUser.setPassword(encodedPassword);
         }
         return userRepository.save(newUser);
     }
