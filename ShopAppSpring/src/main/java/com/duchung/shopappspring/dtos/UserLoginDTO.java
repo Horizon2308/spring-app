@@ -18,4 +18,7 @@ public class UserLoginDTO {
 
     @NotEmpty(message = "Password can't be empty")
     private String password;
+
+    @JsonProperty("role_id")
+    private Long roleId;
 }

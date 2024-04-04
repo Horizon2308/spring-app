@@ -2,6 +2,7 @@ package com.duchung.shopappspring.services;
 
 import com.duchung.shopappspring.domains.IsActive;
 import com.duchung.shopappspring.dtos.ProductDTO;
+import com.duchung.shopappspring.exceptions.DataExistedException;
 import com.duchung.shopappspring.exceptions.DataNotFoundException;
 import com.duchung.shopappspring.models.Category;
 import com.duchung.shopappspring.models.Product;
@@ -29,9 +30,9 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductResponse createProduct(ProductDTO productDTO) throws Exception {
-//        if (existedByProductName(productDTO.getName())) {
-//            throw new DataExistedException("Product existed");
-//        }
+        if (existedByProductName(productDTO.getName())) {
+            throw new DataExistedException("Product existed");
+        }
         // convert productDTO to product entity to save product
         Product newProduct =  convertToProduct(productDTO,
                 categoryRepository.findById(productDTO.getCategoryId())

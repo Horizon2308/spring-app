@@ -35,7 +35,7 @@ public class JwtTokenUtils {
             return Jwts.builder()
                     .setClaims(claims)
                     .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000L))
-                    .setSubject(user.getPassword())
+                    .setSubject(user.getPhoneNumber())
                     .signWith(this.getSigningKey(), SignatureAlgorithm.HS256)
                     .compact();
         } catch (Exception e) {

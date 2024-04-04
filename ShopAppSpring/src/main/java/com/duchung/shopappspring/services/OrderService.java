@@ -73,7 +73,7 @@ public class OrderService implements IOrderService {
     @Override
     public Page<OrderResponse> getAllOrdersByUserId(Long userId, Pageable pageable) throws DataNotFoundException {
         return orderRepository.findAllByUser(userRepository.findById(userId)
-                .orElseThrow(() -> new DataNotFoundException("User not found!")))
+                .orElseThrow(() -> new DataNotFoundException("User not found!")), pageable)
                 .map(this::convertToOrderResponse);
     }
 

@@ -2,7 +2,14 @@ package com.duchung.shopappspring.controllers;
 
 import com.duchung.shopappspring.dtos.UserDTO;
 import com.duchung.shopappspring.dtos.UserLoginDTO;
+import com.duchung.shopappspring.exceptions.DataExistedException;
+import com.duchung.shopappspring.exceptions.DataNotFoundException;
+import com.duchung.shopappspring.exceptions.InvalidParameterException;
+import com.duchung.shopappspring.exceptions.UsernameOrPasswordIsWrong;
+import com.duchung.shopappspring.http_responses.ErrorResponse;
+import com.duchung.shopappspring.http_responses.SuccessResponse;
 import com.duchung.shopappspring.models.User;
+import com.duchung.shopappspring.responses.AuthenticationResponse;
 import com.duchung.shopappspring.services.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,9 +36,14 @@ public class UserController {
             List<String> errorMessages = result. getFieldErrors().stream()
                     .map(FieldError::getDefaultMessage)
                     .toList();
-            return ResponseEntity.badRequest().body(errorMessages);
+            return ResponseEntity.badRequest().body(new ErrorResponse<>(errorMessages));
         }
-        return ResponseEntity.ok().body("Register successfully !");
+        try {
+            return ResponseEntity.ok().body(new SuccessResponse<>(userService.createUser(userDTO),
+                    "Register successfully !"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
+        }
     }
 
     @PostMapping ("/login")
@@ -40,9 +53,17 @@ public class UserController {
             List<String> errorMessages = result.getFieldErrors().stream()
                     .map(FieldError::getDefaultMessage)
                     .toList();
-            return ResponseEntity.badRequest().body(errorMessages);
+            return ResponseEntity.badRequest().body(new ErrorResponse<>(errorMessages));
         }
-        return ResponseEntity.ok().body("Login successfully !");
+        try {
+            return ResponseEntity.ok().body(AuthenticationResponse.builder()
+                            .time(LocalDateTime.now())
+                            .message("Login successfully!")
+                            .token(userService.login(userLoginDTO))
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
+        }
     }
 
 

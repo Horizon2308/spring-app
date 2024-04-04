@@ -81,17 +81,13 @@ public class ProductController {
 
     @PostMapping(value = "/uploads/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadImages(@PathVariable("id") Long productId,
-                                                             @ModelAttribute("files") List<MultipartFile> listOfFiles) {
+                                          @ModelAttribute("listOfFiles") List<MultipartFile> listOfFiles) {
         try {
             List<ProductImageResponse> productImageResponses =
                     productImageService.saveAllProductImages(productId, listOfFiles);
             return ResponseEntity.ok().body(new SuccessResponse<>(productImageResponses,
                     "Uploaded successfully"));
-        } catch (InvalidParameterException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<>("Something was wrong, please try again"));
-        } catch (DataNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
         }
     }

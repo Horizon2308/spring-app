@@ -9,6 +9,8 @@ import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -21,15 +23,21 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
   ],
-  imports: [BrowserModule, FormsModule],
-  providers: [],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [
     //HomeComponent,
     //DetailProductComponent,
     // OrderComponent,
     //OrderConfirmComponent,
-    // LoginComponent,
-    RegisterComponent,
+    LoginComponent,
+    // RegisterComponent,
   ],
 })
 export class AppModule {}

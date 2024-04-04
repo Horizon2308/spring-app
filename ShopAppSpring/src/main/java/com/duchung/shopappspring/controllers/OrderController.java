@@ -109,8 +109,9 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/change-status/{id}/{new_status}/{?shipping_date}")
-    public ResponseEntity<?> changeStatus(@PathVariable("shipping_date") String shippingDate,
+    @PutMapping("/change-status/{id}/{new_status}/{shipping_date}")
+    public ResponseEntity<?> changeStatus(@PathVariable(value = "shipping_date", required = false)
+                                              String shippingDate,
                                           @PathVariable("new_status") String newStatus,
                                           @PathVariable("id") Long orderId) {
         if (newStatus.equals(OrderStatus.SHIPPED) && shippingDate == null) {

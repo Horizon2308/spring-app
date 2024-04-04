@@ -117,7 +117,7 @@
             <div class="divider-nospace"></div>
             <p
               class="text-danger"
-              *ngIf="this.registerForm.form.controls['dateOfBirth'].hasError('isAgeInvalid') 
+              *ngIf="this.registerForm.controls['dateOfBirth'].hasError('isAgeInvalid') 
               && registerForm.form.touched"
             >
               Bạn bắt buộc phải trên 10 tuổi
