@@ -9,6 +9,7 @@ export interface Product {
   updated_at: Date;
   thumbnail: string;
   price: number;
+  quantity: number;
   is_active: number;
   category_id: number;
   product_images: ProductImage[];

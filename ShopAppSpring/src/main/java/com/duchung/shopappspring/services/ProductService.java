@@ -50,6 +50,7 @@ public class ProductService implements IProductService {
                 .categoryId(product.getCategory().getId())
                 .description(product.getDescription())
                 .thumbnail(product.getThumbnail())
+                .quantity(product.getQuantity())
                 .price(product.getPrice())
                 .name(product.getName())
                 .isActive(IsActive.ENABLE)
@@ -63,6 +64,7 @@ public class ProductService implements IProductService {
                 .orElseThrow(() -> new DataNotFoundException("Product not found!"));
         updatedProduct.setName(productDTO.getName());
         updatedProduct.setPrice(productDTO.getPrice());
+        updatedProduct.setQuantity(productDTO.getQuantity());
         updatedProduct.setDescription(productDTO.getDescription());
         updatedProduct.setThumbnail(productDTO.getThumbnail());
         updatedProduct.setCategory(categoryRepository.findById(productDTO.getCategoryId())
@@ -90,6 +92,7 @@ public class ProductService implements IProductService {
                 .price(productDTO.getPrice())
                 .description(productDTO.getDescription())
                 .category(category)
+                .quantity(productDTO.getQuantity())
                 .isActive(IsActive.ENABLE)
                 .build();
     }
@@ -102,6 +105,7 @@ public class ProductService implements IProductService {
                 .thumbnail(product.getThumbnail())
                 .price(product.getPrice())
                 .name(product.getName())
+                .quantity(product.getQuantity())
                 .isActive(IsActive.ENABLE)
                 .build();
         productResponse.setCreateAt(product.getCreateAt());

@@ -65,16 +65,19 @@
         <h2>{{ product?.name }}</h2>
         <p>{{ product?.description }}</p>
         <p>Giá: ${{ product?.price }}</p>
+        <p>Số lượng tồn ở kho: {{ product?.quantity }} sản phẩm</p>
         <!-- <p>Tổng tiền: ${{ getTotalPrice() | number:'1.2-2' }}</p> -->
         <div class="product-actions">
-          <button class="btn btn-primary">Thêm vào giỏ hàng</button>
+          <button class="btn btn-primary" (click)="addProductToCart()">
+            Thêm vào giỏ hàng
+          </button>
           <button class="btn btn-success">Mua ngay</button>
         </div>
         <div class="product-quantity">
           <div class="border-wrapper">
-            <button>-</button>
-            <input type="text" />
-            <button>+</button>
+            <button (click)="decreaseQuantity()">-</button>
+            <input type="text" [value]="quantity" />
+            <button (click)="increaseQuantity()">+</button>
           </div>
         </div>
       </div>

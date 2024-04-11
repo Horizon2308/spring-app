@@ -25,6 +25,8 @@ public class ProductDTO {
 
     private String thumbnail;
 
+    private Long quantity;
+
     private String description;
 
     private List<MultipartFile> files;

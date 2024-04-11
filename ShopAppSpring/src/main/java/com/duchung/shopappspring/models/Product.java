@@ -35,6 +35,8 @@ public class Product extends BaseEntity {
     @JsonProperty("is_active")
     private int isActive;
 
+    private Long quantity;
+
     @OneToMany(mappedBy = "product",
                cascade = CascadeType.ALL,
                fetch = FetchType.LAZY)

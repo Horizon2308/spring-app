@@ -23,6 +23,8 @@ public class ProductResponse extends BaseResponse {
 
     private Double price;
 
+    private Long quantity;
+
     @JsonProperty("is_active")
     private int isActive;
 

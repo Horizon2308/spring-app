@@ -3,6 +3,7 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../models/product';
 import { ProductImage } from '../models/product.image';
 import { environment } from '../environments/environment';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -15,7 +16,10 @@ export class DetailProductComponent implements OnInit {
   currentIndexImage: number = 0;
   quantity: number = 1;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
   ngOnInit() {
     const idParam = 5;
     debugger;
@@ -75,8 +79,30 @@ export class DetailProductComponent implements OnInit {
     this.showImage(this.currentIndexImage + 1);
   }
 
+  decreaseQuantity(): void {
+    --this.quantity;
+    if (this.quantity <= 0 && this.product) {
+      this.quantity = 1;
+    }
+  }
+
+  increaseQuantity(): void {
+    ++this.quantity;
+    if (this.quantity > this.product!.quantity && this.product) {
+      this.quantity = this.product!.quantity;
+    }
+  }
+
   previousImage(): void {
     debugger;
     this.showImage(this.currentIndexImage - 1);
+  }
+
+  addProductToCart() {
+    if (this.product) {
+      this.cartService.addProductIntoCartItems(this.productId, this.quantity);
+    } else {
+      alert('Không thể thêm sản phẩm vào giỏ hàng!');
+    }
   }
 }
