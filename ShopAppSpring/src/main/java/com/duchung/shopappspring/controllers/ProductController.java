@@ -2,7 +2,6 @@ package com.duchung.shopappspring.controllers;
 
 import com.duchung.shopappspring.dtos.ProductDTO;
 import com.duchung.shopappspring.exceptions.DataNotFoundException;
-import com.duchung.shopappspring.exceptions.InvalidParameterException;
 import com.duchung.shopappspring.http_responses.BaseResponse;
 import com.duchung.shopappspring.http_responses.ErrorResponse;
 import com.duchung.shopappspring.http_responses.SuccessResponse;
@@ -13,10 +12,13 @@ import com.duchung.shopappspring.services.ICategoryService;
 import com.duchung.shopappspring.services.IProductImageService;
 import com.duchung.shopappspring.services.IProductService;
 import com.github.javafaker.Faker;
+import com.github.javafaker.Internet;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,7 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -38,11 +42,21 @@ public class ProductController {
     private final IProductImageService productImageService;
 
     @GetMapping()
-    public ResponseEntity<BaseResponse<ProductListResponse>> getAllProducts(@RequestParam(value = "page", required = false) Integer page,
-                                                       @RequestParam(value = "limit", required = false) Integer limit) {
-        Page<ProductResponse> products = productService.getAllProducts(PageRequest.of(page, limit));
+    public ResponseEntity<BaseResponse<ProductListResponse>> getAllProducts(
+            @RequestParam(defaultValue = "0", value = "category_id") Long categoryId,
+            @RequestParam(defaultValue = "", value = "keyword") String keyword,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "12") Integer limit) {
+        Page<ProductResponse> products = productService.getAllProducts(
+                categoryId,
+                keyword,
+                PageRequest.of(page, limit,
+                Sort.by("id").ascending()));
         int totalPage = products.getTotalPages();
         if (totalPage == 0) {
+            return ResponseEntity.ok(new SuccessResponse<>("Products page is empty!"));
+        }
+        if (products.getContent().size() == 0) {
             return ResponseEntity.ok(new SuccessResponse<>("Products page is empty!"));
         }
         return ResponseEntity.ok().body(new SuccessResponse<>(ProductListResponse.builder()
@@ -89,6 +103,23 @@ public class ProductController {
                     "Uploaded successfully"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
+        }
+    }
+
+    @GetMapping("images/{imageName}")
+    public ResponseEntity<?> viewImage(@PathVariable String imageName) {
+        Path imagePath = Paths.get("uploads/" + imageName);
+        try {
+            UrlResource urlResource = new UrlResource(imagePath.toUri());
+            if (urlResource.exists()) {
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(urlResource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (MalformedURLException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 

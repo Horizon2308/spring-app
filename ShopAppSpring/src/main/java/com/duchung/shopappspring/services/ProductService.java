@@ -11,7 +11,7 @@ import com.duchung.shopappspring.repositories.ProductRepository;
 import com.duchung.shopappspring.responses.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -23,11 +23,10 @@ public class ProductService implements IProductService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Page<ProductResponse> getAllProducts(PageRequest pageRequest) {
-        return productRepository.findAll(pageRequest)
+    public Page<ProductResponse> getAllProducts(Long categoryId, String keyword, Pageable pageable) {
+        return productRepository.searchProducts(categoryId, keyword, pageable)
                 .map(this::convertToProductResponse);
     }
-
     @Override
     public ProductResponse createProduct(ProductDTO productDTO) throws Exception {
         if (existedByProductName(productDTO.getName())) {
@@ -44,8 +43,18 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductResponse getProductById(Long productId) throws DataNotFoundException {
-        return convertToProductResponse(productRepository.findById(productId)
-                .orElseThrow(() -> new DataNotFoundException("Product not found!")));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new DataNotFoundException("Product not found!"));
+        return ProductResponse.builder()
+                .id(product.getId())
+                .categoryId(product.getCategory().getId())
+                .description(product.getDescription())
+                .thumbnail(product.getThumbnail())
+                .price(product.getPrice())
+                .name(product.getName())
+                .isActive(IsActive.ENABLE)
+                .productImages(product.getProductImages())
+                .build();
     }
 
     @Override
@@ -91,6 +100,7 @@ public class ProductService implements IProductService {
                 .categoryId(product.getCategory().getId())
                 .description(product.getDescription())
                 .thumbnail(product.getThumbnail())
+                .price(product.getPrice())
                 .name(product.getName())
                 .isActive(IsActive.ENABLE)
                 .build();

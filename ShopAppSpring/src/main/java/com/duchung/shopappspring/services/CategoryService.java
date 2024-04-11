@@ -1,10 +1,14 @@
 package com.duchung.shopappspring.services;
 
 import com.duchung.shopappspring.dtos.CategoryDTO;
+import com.duchung.shopappspring.exceptions.DataExistedException;
 import com.duchung.shopappspring.models.Category;
 import com.duchung.shopappspring.models.Product;
 import com.duchung.shopappspring.repositories.CategoryRepository;
+import com.duchung.shopappspring.responses.CategoriesResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +21,11 @@ public class CategoryService implements ICategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Category createCategory(CategoryDTO categoryDTO) {
+    public Category createCategory(CategoryDTO categoryDTO) throws DataExistedException {
         if (existedCategory(categoryDTO.getName())) {
-            throw new RuntimeException("Category existed!");
+            throw new DataExistedException("Category existed!");
         }
-        return categoryRepository.save(new Category().builder().name(categoryDTO.getName()).build());
+        return categoryRepository.save(Category.builder().name(categoryDTO.getName()).build());
     }
 
     @Override
@@ -31,8 +35,13 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public List<Category> getAllCategory() {
-        return categoryRepository.findAll();
+    public CategoriesResponse getAllCategory(Pageable pageable) {
+        Page<Category> categories = categoryRepository.findAll(pageable);
+        int totalPage = categories.getTotalPages();
+        return CategoriesResponse.builder()
+                .categories(categories)
+                .totalPage(totalPage)
+                .build();
     }
 
     @Override

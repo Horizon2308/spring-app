@@ -1,5 +1,6 @@
 package com.duchung.shopappspring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +19,9 @@ public class ProductImage {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
-    @Column(length = 300, nullable = false)
+    @Column(name = "image_url", length = 300, nullable = false)
     private String url;
 }

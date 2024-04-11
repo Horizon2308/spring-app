@@ -1,8 +1,11 @@
 package com.duchung.shopappspring.models;
 
 import com.duchung.shopappspring.domains.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -29,7 +32,13 @@ public class Product extends BaseEntity {
     private String description;
 
     @Column(name = "active")
+    @JsonProperty("is_active")
     private int isActive;
+
+    @OneToMany(mappedBy = "product",
+               cascade = CascadeType.ALL,
+               fetch = FetchType.LAZY)
+    private List<ProductImage> productImages;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

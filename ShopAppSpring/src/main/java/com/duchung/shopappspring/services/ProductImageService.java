@@ -95,7 +95,7 @@ public class ProductImageService implements IProductImageService {
             Files.createDirectories(uploadDir);
         }
         // get the full file path to save the file
-        Path destination = Paths.get(uploadDir.toString(), fileName);
+        Path destination = Paths.get(uploadDir.toString(), uniqueFileName);
         // then save the file
         Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
         return uniqueFileName;
@@ -105,7 +105,7 @@ public class ProductImageService implements IProductImageService {
         if (file == null || file.getSize() == 0) {
             throw new InvalidParameterException(file.getOriginalFilename() + " is invalid image");
         }
-        if (file.getSize() > 10 + 1024) {
+        if (file.getSize() > 10 * 1024 * 1024) {
             throw new InvalidParameterException(file.getOriginalFilename() + " is too large! Maximum size is 10MB");
         }
         String contentType = file.getContentType();
