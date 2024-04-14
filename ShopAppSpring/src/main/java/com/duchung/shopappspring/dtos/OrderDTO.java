@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Setter
@@ -45,4 +46,6 @@ public class OrderDTO {
     @NotEmpty(message = "Payment method can't be blank")
     private String paymentMethod;
 
+    @JsonProperty("cart_items")
+    private List<CartItemDTO> cartItems;
 }

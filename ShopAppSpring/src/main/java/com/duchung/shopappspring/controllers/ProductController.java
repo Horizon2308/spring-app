@@ -5,6 +5,7 @@ import com.duchung.shopappspring.exceptions.DataNotFoundException;
 import com.duchung.shopappspring.http_responses.BaseResponse;
 import com.duchung.shopappspring.http_responses.ErrorResponse;
 import com.duchung.shopappspring.http_responses.SuccessResponse;
+import com.duchung.shopappspring.models.Product;
 import com.duchung.shopappspring.responses.ProductImageResponse;
 import com.duchung.shopappspring.responses.ProductListResponse;
 import com.duchung.shopappspring.responses.ProductResponse;
@@ -30,7 +31,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -76,6 +79,14 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/by-ids")
+    public ResponseEntity<?> getProductsByIds(@RequestParam("ids") String ids) {
+        List<Long> productIds = Arrays.stream(ids.split(","))
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
+        List<Product> products = productService.findProductsByIds(productIds);
+        return ResponseEntity.ok().body(products);
+    }
     @PostMapping(value = "")
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDTO productDTO,
                                             BindingResult result) {

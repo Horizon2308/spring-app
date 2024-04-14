@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +85,11 @@ public class ProductService implements IProductService {
     @Override
     public boolean existedByProductName(String productName) {
         return productRepository.existsProductByName(productName);
+    }
+
+    @Override
+    public List<Product> findProductsByIds(List<Long> ids) {
+        return productRepository.findProductsByIds(ids);
     }
 
     private Product convertToProduct(ProductDTO productDTO, Category category) {
