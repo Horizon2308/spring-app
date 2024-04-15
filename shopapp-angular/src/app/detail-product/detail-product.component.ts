@@ -4,6 +4,7 @@ import { Product } from '../models/product';
 import { ProductImage } from '../models/product.image';
 import { environment } from '../environments/environment';
 import { CartService } from '../services/cart.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-product',
@@ -15,13 +16,16 @@ export class DetailProductComponent implements OnInit {
   productId: number = 0;
   currentIndexImage: number = 0;
   quantity: number = 1;
+  isPressedAddToCart: boolean = false;
 
   constructor(
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
   ngOnInit() {
-    const idParam = 5;
+    const idParam = this.activatedRoute.snapshot.paramMap.get('id');
     debugger;
     if (idParam !== null) {
       this.productId = +idParam;
@@ -99,10 +103,18 @@ export class DetailProductComponent implements OnInit {
   }
 
   addProductToCart() {
+    this.isPressedAddToCart = true;
     if (this.product) {
       this.cartService.addProductIntoCartItems(this.productId, this.quantity);
+      alert('Sản phẩm đã được thêm vào giỏ hàng!');
     } else {
       alert('Không thể thêm sản phẩm vào giỏ hàng!');
     }
+  }
+  buyNow(): void {
+    if (this.isPressedAddToCart == false) {
+      this.addProductToCart();
+    }
+    this.router.navigate(['/orders']);
   }
 }

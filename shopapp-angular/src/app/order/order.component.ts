@@ -17,6 +17,7 @@ import { Province } from '../responses/ghn/province.interface';
 import { District } from '../responses/ghn/district.interface';
 import { Ward } from '../responses/ghn/ward.interface';
 import { Service } from '../responses/ghn/service.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -60,7 +61,8 @@ export class OrderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private tokenService: TokenService,
     private orderService: OrderService,
-    private ghnService: GHNService
+    private ghnService: GHNService,
+    private router: Router
   ) {
     this.orderForm = this.formBuilder.group({
       fullname: ['', Validators.required],
@@ -309,6 +311,8 @@ export class OrderComponent implements OnInit {
           debugger;
           alert('Đặt hàng thành công');
           this.cartService.clearCartItems();
+          let orderId = response.data.id;
+          this.router.navigate(['/orders'], orderId);
         },
         complete: () => {
           debugger;

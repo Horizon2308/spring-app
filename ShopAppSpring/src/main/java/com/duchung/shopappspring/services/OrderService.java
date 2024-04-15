@@ -127,6 +127,7 @@ public class OrderService implements IOrderService {
                 .shippingAddress(order.getShippingAddress())
                 .shippingMethod(order.getShippingMethod())
                 .shippingDate(order.getShippingDate())
+                .orderDetails(order.getOrderDetails())
                 .build();
         orderResponse.setCreateAt(order.getCreateAt());
         orderResponse.setUpdateAt(order.getUpdateAt());

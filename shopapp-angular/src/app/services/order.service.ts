@@ -8,11 +8,14 @@ import { OrderDTO } from '../dtos/order.dto';
   providedIn: 'root',
 })
 export class OrderService {
-    private readonly urlPlaceOrder = `${environment.apiBaseUrl}/orders`
-    constructor(private http: HttpClient) { }
-    
-    placeOrder(orderData: OrderDTO): Observable<any> {
-        return this.http.post(this.urlPlaceOrder, orderData);
-    }
-    
+  private readonly urlPlaceOrder = `${environment.apiBaseUrl}/orders`;
+  constructor(private http: HttpClient) {}
+
+  placeOrder(orderData: OrderDTO): Observable<any> {
+    return this.http.post(this.urlPlaceOrder, orderData);
+  }
+  getOrderById(orderId: number): Observable<any> {
+    const url = `${environment.apiBaseUrl}/orders/${orderId}`;
+    return this.http.get(url);
+  }
 }
