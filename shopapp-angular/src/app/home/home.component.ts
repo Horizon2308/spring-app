@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit {
         },
         complete: () => {},
         error: (error: any) => {
-          debugger;
           console.error('Error fetching products:', error);
         },
       });

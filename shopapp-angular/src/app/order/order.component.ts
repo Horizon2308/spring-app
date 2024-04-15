@@ -87,10 +87,10 @@ export class OrderComponent implements OnInit {
     const productIds = Array.from(this.cart.keys()); // Chuyển danh sách ID từ Map giỏ hàng
 
     // Gọi service để lấy thông tin sản phẩm dựa trên danh sách ID
-    debugger;
-    if (productIds.length === 0) {
-      return;
-    }
+    // debugger;
+    // if (productIds.length === 0) {
+    //   return;
+    // }
 
     debugger;
     this.ghnService.getProvince().subscribe({

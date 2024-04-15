@@ -2,7 +2,7 @@
     color: white;
 }
 .intro-section {
-    color: white;
+    color: black;
     padding: 20px;
     text-align: center;
 }
@@ -20,13 +20,13 @@
     background-color: rgb(19, 23, 42);
 }
 .form-label {
-    color: white;
+    color: black;
 }
 .product-header {
     color: rgb(233, 66, 176);
 }
 .product-order {
-    color: rgb(105, 244, 181);
+    color: rgb(233, 66, 176);
 }
 table {
     width: 100%;
@@ -38,6 +38,10 @@ table {
     background-color: rgb(12, 13, 54);    
 }
 
+
+.mb-3{
+    color: black;
+}
 th,
 td {
     padding: 10px;
@@ -64,4 +68,7 @@ td {
     color: white;
     border-radius: 30px;
     width: 200px;
+  }
+  h5,h3{
+    color:black;
   }
