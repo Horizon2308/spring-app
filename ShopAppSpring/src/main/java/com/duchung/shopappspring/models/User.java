@@ -33,6 +33,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column(length = 100)
     private String password;
 
+    private String address;
+
     private boolean isActive;
 
     private Date dateOfBirth;

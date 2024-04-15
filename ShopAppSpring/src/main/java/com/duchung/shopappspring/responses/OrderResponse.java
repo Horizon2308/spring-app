@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 public class OrderResponse extends BaseResponse {
 
+    @JsonProperty("id")
     private Long id;
 
     @JsonProperty("user_id")
@@ -23,18 +24,22 @@ public class OrderResponse extends BaseResponse {
     @JsonProperty("full_name")
     private String fullName;
 
+    @JsonProperty("email")
     private String email;
 
     @JsonProperty("phone_number")
     private String phoneNumber;
 
+    @JsonProperty("address")
     private String address;
 
+    @JsonProperty("note")
     private String note;
 
     @JsonProperty("order_date")
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
+    @JsonProperty("status")
     private String status;
 
     @JsonProperty("total_money")
@@ -55,7 +60,9 @@ public class OrderResponse extends BaseResponse {
     @JsonProperty("payment_method")
     private String paymentMethod;
 
+    @JsonProperty("active")
     private int active;
 
+    @JsonProperty("order_details")
     private List<OrderDetail> orderDetails;
 }

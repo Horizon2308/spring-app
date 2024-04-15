@@ -291,7 +291,7 @@ export class OrderComponent implements OnInit {
           wardName = ward.wardName;
         }
       });
-      const address = `${provinceName} ${districtName} ${wardName}`;
+      const address = `${wardName}, ${districtName}, ${provinceName}`;
       this.orderData.address = address;
       this.orderData.shipping_address = address;
       this.orderData.total_money = this.totalAmount;
@@ -312,7 +312,7 @@ export class OrderComponent implements OnInit {
           alert('Đặt hàng thành công');
           this.cartService.clearCartItems();
           let orderId = response.data.id;
-          this.router.navigate(['/orders'], orderId);
+          this.router.navigate(['/orders/'], orderId);
         },
         complete: () => {
           debugger;

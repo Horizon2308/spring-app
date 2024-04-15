@@ -41,7 +41,7 @@ public class Order extends BaseEntity {
     @Column(length = 100)
     private String note;
 
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
     private String status;
 
@@ -63,7 +63,7 @@ public class Order extends BaseEntity {
 
     private int active;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<OrderDetail> orderDetails;
 

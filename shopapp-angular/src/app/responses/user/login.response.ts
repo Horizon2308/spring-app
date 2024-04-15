@@ -1,4 +1,4 @@
-export interface LoginInterface {
+export interface LoginResponse {
     time: Date
     message: string
     token: string

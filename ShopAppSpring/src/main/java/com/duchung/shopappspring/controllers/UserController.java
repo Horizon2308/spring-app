@@ -10,9 +10,11 @@ import com.duchung.shopappspring.http_responses.ErrorResponse;
 import com.duchung.shopappspring.http_responses.SuccessResponse;
 import com.duchung.shopappspring.models.User;
 import com.duchung.shopappspring.responses.AuthenticationResponse;
+import com.duchung.shopappspring.responses.UserResponse;
 import com.duchung.shopappspring.services.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
@@ -66,7 +68,16 @@ public class UserController {
         }
     }
 
-
+    @PostMapping("/details")
+    public ResponseEntity<?> getUserDetails(
+            @RequestHeader("Authorization") String authorizationHeader
+    ) throws Exception {
+        String extractedToken = authorizationHeader.substring(7); // Loại bỏ "Bearer " từ chuỗi token
+        User user = userService.getUserDetailsFromToken(extractedToken);
+        return ResponseEntity.ok().body(
+                new SuccessResponse<>(UserResponse.fromUser(user), "Get user details")
+        );
+    }
 }
 
 

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class OrderDTO {
     @Min(value = 0, message = "Total money must be greater than 0")
     private double totalMoney;
 
+    @JsonProperty("shipping_date")
+    private LocalDate shippingDate;
+
     @JsonProperty("shipping_method")
     @NotEmpty(message = "Shipping method can't be blank")
     private String shippingMethod;
@@ -48,4 +52,5 @@ public class OrderDTO {
 
     @JsonProperty("cart_items")
     private List<CartItemDTO> cartItems;
+
 }

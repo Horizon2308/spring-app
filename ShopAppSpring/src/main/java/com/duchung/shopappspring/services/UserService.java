@@ -3,10 +3,7 @@ package com.duchung.shopappspring.services;
 import com.duchung.shopappspring.components.JwtTokenUtils;
 import com.duchung.shopappspring.dtos.UserDTO;
 import com.duchung.shopappspring.dtos.UserLoginDTO;
-import com.duchung.shopappspring.exceptions.DataExistedException;
-import com.duchung.shopappspring.exceptions.DataNotFoundException;
-import com.duchung.shopappspring.exceptions.InvalidParameterException;
-import com.duchung.shopappspring.exceptions.UsernameOrPasswordIsWrong;
+import com.duchung.shopappspring.exceptions.*;
 import com.duchung.shopappspring.models.Role;
 import com.duchung.shopappspring.models.User;
 import com.duchung.shopappspring.repositories.RoleRepository;
@@ -16,6 +13,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -72,6 +71,21 @@ public class UserService implements IUserService {
             return token;
         } else {
             throw new UsernameOrPasswordIsWrong("Username or password is wrong!");
+        }
+    }
+
+    @Override
+    public User getUserDetailsFromToken(String token) throws Exception {
+        if(jwtTokenUtils.isTokenExpired(token)) {
+            throw new ExpiredTokenException("Token is expired");
+        }
+        String phoneNumber = jwtTokenUtils.exactPhoneNumber(token);
+        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new Exception("User not found");
         }
     }
 }

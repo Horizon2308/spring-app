@@ -61,9 +61,6 @@ public class WebSecurityConfig {
                             .requestMatchers(HttpMethod.GET,
                                     String.format("%s/products/by-ids**", apiPrefix)).permitAll()
 
-                            .requestMatchers(HttpMethod.POST,
-                                    String.format("%s/products/uploads**", apiPrefix)).hasRole("ADMIN")
-
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
