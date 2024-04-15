@@ -1,11 +1,13 @@
 package com.duchung.shopappspring.models;
 
 import com.duchung.shopappspring.domains.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Getter
@@ -60,5 +62,9 @@ public class Order extends BaseEntity {
     private String paymentMethod;
 
     private int active;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<OrderDetail> orderDetails;
 
 }

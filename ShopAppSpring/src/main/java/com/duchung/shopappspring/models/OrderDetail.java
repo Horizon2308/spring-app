@@ -1,6 +1,7 @@
 package com.duchung.shopappspring.models;
 
 import com.duchung.shopappspring.domains.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class OrderDetail extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
 
     @ManyToOne
@@ -35,5 +37,7 @@ public class OrderDetail extends BaseEntity {
     private String color;
 
     private int status;
+
+
 
 }
