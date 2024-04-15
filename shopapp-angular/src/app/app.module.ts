@@ -33,10 +33,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     },
   ],
   bootstrap: [
-    // HomeComponent,
+    HomeComponent,
     // DetailProductComponent,
     // OrderComponent,
-    OrderConfirmComponent,
+    // OrderConfirmComponent,
     // LoginComponent,
     // RegisterComponent,
 
