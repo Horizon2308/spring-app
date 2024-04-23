@@ -1,15 +1,19 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { RegisterDTO } from '../dtos/register.dto';
+import { Province } from '../responses/ghn/province.interface';
+import { District } from '../responses/ghn/district.interface';
+import { Ward } from '../responses/ghn/ward.interface';
+import { GHNService } from '../services/ghn.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   @ViewChild('registerForm') registerForm!: NgForm; // quản lý form bên html
   phone: string;
   password: string;
@@ -19,8 +23,20 @@ export class RegisterComponent {
   address: string;
   isAccepted: boolean;
 
-  constructor(private router: Router, private userService: UserService) {
-    this.phone = '0356202542';
+  provinces: Province[] = [];
+  selectedProvinceId: number = 0;
+  districts: District[] = [];
+  selectedDistrictId: number = 0;
+  wards: Ward[] = [];
+  selectedWardCode: string = '0';
+  showPassword: boolean = false;
+
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private ghnService: GHNService
+  ) {
+    this.phone = '0915144606';
     this.password = 'Hungpro2308';
     this.retypePassword = 'Hungpro2308';
     this.address = 'Ninh Binh';
@@ -29,21 +45,106 @@ export class RegisterComponent {
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
   }
+  ngOnInit(): void {
+    debugger;
+    this.ghnService.getProvince().subscribe({
+      next: (response: any) => {
+        debugger;
+        this.provinces = response.data.map((province: any) => {
+          return {
+            provinceId: province.ProvinceID,
+            provinceName: province.ProvinceName,
+          };
+        });
+        console.log('Get provinces successfully!');
+      },
+      complete: () => {
+        debugger;
+        console.log('Completed!');
+      },
+      error: (error: any) => {
+        debugger;
+        console.error('Error fetching provinces:', error);
+      },
+    });
+  }
+
+  provinceChange(): void {
+    debugger;
+    console.log(this.selectedProvinceId);
+    this.ghnService.getDistrict(this.selectedProvinceId).subscribe({
+      next: (response: any) => {
+        this.districts = response.data.map((district: any) => {
+          return {
+            districtId: district.DistrictID,
+            districtName: district.DistrictName,
+          };
+        });
+      },
+      complete: () => {
+        debugger;
+        console.log('Completed!');
+      },
+      error: (error: any) => {
+        debugger;
+        console.error('Error fetching districts:', error);
+      },
+    });
+  }
+
+  districtChange(): void {
+    this.ghnService.getWard(this.selectedDistrictId).subscribe({
+      next: (response: any) => {
+        this.wards = response.data.map((ward: any) => {
+          return {
+            wardCode: ward.WardCode,
+            wardName: ward.WardName,
+          };
+        });
+      },
+      complete: () => {
+        debugger;
+        console.log('Completed!');
+      },
+      error: (error: any) => {
+        debugger;
+        console.error('Error fetching wards:', error);
+      },
+    });
+  }
 
   onChangePhoneNumber() {
     console.log(`Phone typed: ${this.phone}`);
   }
 
   register() {
+    debugger;
     // alert(`Phone: ${this.phone}, Password: ${this.password},
     // Retype Password: ${this.retypePassword}, Address: ${this.address},
     // Fullname: ${this.fullName}, Is accepted: ${this.isAccepted},
     // Date of birth: ${this.dateOfBirth}`);
+    let provinceName, districtName, wardName;
+    this.provinces.forEach((province) => {
+      if (province.provinceId == this.selectedProvinceId) {
+        provinceName = province.provinceName;
+      }
+    });
+    this.districts.forEach((district) => {
+      if (district.districtId == this.selectedDistrictId) {
+        districtName = district.districtName;
+      }
+    });
+    this.wards.forEach((ward) => {
+      if (ward.wardCode == this.selectedWardCode) {
+        wardName = ward.wardName;
+      }
+    });
+    const address = `${wardName}, ${districtName}, ${provinceName}`;
     debugger;
     const registerDTO: RegisterDTO = {
       full_name: this.fullName,
       phone_number: this.phone,
-      address: this.address,
+      address: address,
       password: this.password,
       retype_password: this.retypePassword,
       date_of_birth: this.dateOfBirth,
@@ -62,6 +163,10 @@ export class RegisterComponent {
         alert(`${error.error.status}: Có lỗi xảy ra: ${error.error.message}`);
       },
     });
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   checkPasswordMatched() {

@@ -37,6 +37,7 @@ public class UserService implements IUserService {
         User newUser = User.builder()
                 .dateOfBirth(userDTO.getDateOfBirth())
                 .fullName(userDTO.getFullName())
+                .address(userDTO.getAddress())
                 .googleAccountId(userDTO.getFacebookAccountId())
                 .facebookAccountId(userDTO.getFacebookAccountId())
                 .isActive(true)

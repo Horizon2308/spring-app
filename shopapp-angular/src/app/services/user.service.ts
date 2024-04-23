@@ -6,6 +6,7 @@ import { RegisterDTO } from '../dtos/register.dto';
 import { LoginDTO } from '../dtos/login.dto';
 import { environment } from '../environments/environment';
 import { UserResponse } from '../responses/user/user.response';
+import { UpdateUserDTO } from '../dtos/update.user.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -84,5 +85,20 @@ export class UserService {
       console.error('Error removing user data from local storage:', error);
       // Handle the error as needed
     }
+  }
+
+  updateUserDetail(token: string, updateUserDTO: UpdateUserDTO) {
+    debugger;
+    let userResponse = this.getUserResponseFromLocalStorage();
+    return this.http.put(
+      `${this.apiUserDetail}/${userResponse?.id}`,
+      updateUserDTO,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
 }

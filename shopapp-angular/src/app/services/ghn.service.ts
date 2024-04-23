@@ -37,6 +37,11 @@ export class GHNService {
     return this.http.get<any>(this.urlApiGetProvince, { headers });
   }
 
+  async getProvinceAsync(): Promise<Observable<any>> {
+    const headers = new HttpHeaders().set('token', this.tokenGHN);
+    return this.http.get<any>(this.urlApiGetProvince, { headers });
+  }
+
   getDistrict(province_id: number): Observable<any> {
     const headers = new HttpHeaders().set('token', this.tokenGHN);
     debugger;

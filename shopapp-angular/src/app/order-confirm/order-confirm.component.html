@@ -2,13 +2,13 @@
 <div class="container">
   <div class="intro-section">
     <h1>Chi tiết đơn hàng</h1>
-    <p>Xem thông tin chi tiết đơn hàng</p>
+    
   </div>
 
   <!-- Thông tin người nhận -->
   <div *ngIf="orderResponse" class="row">
     <div class="col-md-6">
-      <h2 class="product-header">Thông tin người nhận</h2>
+      <h3 class="product-header">Thông tin người nhận</h3>
       <div class="mb-3">
         <p class="form-label">Họ và tên: {{ orderResponse.fullname }}</p>
       </div>
@@ -41,11 +41,11 @@
 
     <!-- Sản phẩm đã đặt hàng -->
     <div class="col-md-6">
-      <h2 class="product-order">Sản phẩm đã đặt hàng</h2>
-      <table>
+      <h3 class="product-order">Sản phẩm đã đặt hàng</h3>
+      <table class="text-start">
         <thead>
           <tr>
-            <th scope="col" class="text-start">Sản phẩm</th>
+            <th scope="col" >Sản phẩm</th>
             <th scope="col">Số lượng</th>
             <th scope="col">Đơn giá</th>
             <th scope="col">Tổng giá</th>

@@ -21,7 +21,10 @@
         {{ category.name }}
       </option>
     </select>
-    <button class="btn btn-primary" (click)="searchProducts()">Tìm kiếm</button>
+    <div class="click_search">
+      <button class="btn btn-primary" (click)="searchProducts()">Tìm kiếm</button>
+    </div>
+    
   </div>
   <div class="row">
     <div class="col-lg-4 col-md-6" *ngFor="let product of products">

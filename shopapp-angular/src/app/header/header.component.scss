@@ -1,32 +1,33 @@
 header {
-  background-color: rgba(0, 0, 0, 0);
-  color: rgb(173, 178, 203);
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
 }
-// .navbar .menu_down ul li {
+.navbar .menu_down ul li {
 
-//     line-height: 45px;
-//     padding: 0 34px;
-//     list-style: none;
-// }
+    line-height: 45px;
+    padding: 0 34px;
+    list-style: none;
+}
 
-// .nav_menu .navbar ul li
-// {
-//     float:left;
-//     line-height: 45px;
-//     padding: 0 34px;
-//     list-style: none;
-// }
-// .nav_menu .navbar ul li a
-// {
-//     color:black;
-//     padding: 0px 0px 0px 20px;
-//     font-weight: 500;
-//     text-transform: uppercase;
-// }
-// .nav_menu .navbar ul li a:hover
-// {
-//     color:#c2252e;
-// }
+
+.nav_menu .navbar ul li
+{
+    float:left;
+    line-height: 45px;
+    padding: 0 34px;
+    list-style: none;
+}
+.nav_menu .navbar ul li a
+{
+    color:black;
+    padding: 0px 0px 0px 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.nav_menu .navbar ul li a:hover
+{
+    color:#c2252e;
+}
 .menu_down {
   background-color: #fff;
   width: 210px;
@@ -55,7 +56,8 @@ header {
   visibility: visible;
 }
 .navbar {
-  background-color: rgba(0, 0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+   
 }
 
 .navbar .container {
@@ -67,9 +69,10 @@ header {
 }
 
 .navbar .container .navbar-nav .nav-link {
-  color: rgb(173, 178, 203);
-  border-radius: 18px;
-  padding: 8px 16px;
+
+    color: black;
+    border-radius: 18px;
+    padding: 8px 16px;
 }
 
 .navbar .container .navbar-nav .nav-link.active {

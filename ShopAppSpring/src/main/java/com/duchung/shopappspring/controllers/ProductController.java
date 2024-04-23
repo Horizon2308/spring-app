@@ -13,7 +13,6 @@ import com.duchung.shopappspring.services.ICategoryService;
 import com.duchung.shopappspring.services.IProductImageService;
 import com.duchung.shopappspring.services.IProductService;
 import com.github.javafaker.Faker;
-import com.github.javafaker.Internet;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;

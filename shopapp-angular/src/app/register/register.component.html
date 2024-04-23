@@ -1,4 +1,4 @@
-<!-- <app-header></app-header> -->
+<app-header></app-header>
 <div class="container">
   <form #registerForm="ngForm">
     <div class="row">
@@ -32,7 +32,7 @@
           <div class="form-group password-field">
             <label for="password">Mật khẩu</label>
             <input
-              type="password"
+              type="{{ showPassword ? 'text' : 'password' }}"
               [(ngModel)]="password"
               (focus)="registerForm.form.markAsTouched()"
               required
@@ -41,7 +41,11 @@
               class="form-control"
               id="password"
             />
-            <i class="password-toggle fas fa-eye-slash"></i>
+            <i
+              class="password-toggle fas"
+              [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+              (click)="togglePassword()"
+            ></i>
             <div class="divider-nospace"></div>
             <p
               class="text-danger"
@@ -54,7 +58,7 @@
           <div class="form-group password-field">
             <label for="retype-password">Gõ lại mật khẩu</label>
             <input
-              type="password"
+              type="{{ showPassword ? 'text' : 'password' }}"
               [(ngModel)]="retypePassword"
               name="retypePassword"
               (input)="
@@ -65,7 +69,11 @@
               class="form-control"
               id="retype-password"
             />
-            <i class="password-toggle fas fa-eye-slash"></i>
+            <i
+              class="password-toggle fas"
+              [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+              (click)="togglePassword()"
+            ></i>
             <div class="divider-nospace"></div>
             <p
               class="text-danger"
@@ -117,31 +125,68 @@
             <div class="divider-nospace"></div>
             <p
               class="text-danger"
-              *ngIf="this.registerForm.controls['dateOfBirth'].hasError('isAgeInvalid') 
-              && registerForm.form.touched"
+              *ngIf="
+                this.registerForm.controls['dateOfBirth'].hasError(
+                  'isAgeInvalid'
+                ) && registerForm.form.touched
+              "
             >
               Bạn bắt buộc phải trên 10 tuổi
             </p>
           </div>
           <div class="mt-3"></div>
           <div class="form-group">
-            <label for="address">Địa chỉ</label>
-            <input
-              type="text"
-              [(ngModel)]="address"
-              (focus)="registerForm.form.markAsTouched()"
-              required
-              name="address"
-              class="form-control"
-              id="address"
-            />
-            <div class="divider-nospace"></div>
-            <p
-              class="text-danger"
-              *ngIf="address.length < 3 && registerForm.form.touched"
+            <label for="provinceSelect" class="form-label"
+              >Tỉnh/Thành phố</label
             >
-              Địa chỉ phải có ít nhất 3 kí tự
-            </p>
+            <select
+              id="provinceSelect"
+              class="form-control product-category"
+              (change)="provinceChange()"
+              [(ngModel)]="selectedProvinceId"
+              name="selectedProvinceId"
+            >
+              <option [ngValue]="0">Lựa chọn tỉnh/thành phố</option>
+              <option
+                *ngFor="let province of provinces"
+                [ngValue]="province.provinceId"
+              >
+                {{ province.provinceName }}
+              </option>
+            </select>
+            <div class="divider-nospace"></div>
+          </div>
+          <div class="form-group">
+            <label for="" class="form-label">Quận/Huyện</label>
+            <select
+              class="form-control product-category"
+              (change)="districtChange()"
+              name="selectedDistrictId"
+              [(ngModel)]="selectedDistrictId"
+            >
+              <option [ngValue]="0">Lựa chọn quận/huyện</option>
+              <option
+                *ngFor="let district of districts"
+                [ngValue]="district.districtId"
+              >
+                {{ district.districtName }}
+              </option>
+            </select>
+            <div class="divider-nospace"></div>
+          </div>
+          <div class="form-group">
+            <label for="" class="form-label">Phường/Xã</label>
+            <select
+              class="form-control product-category"
+              [(ngModel)]="selectedWardCode"
+              name="selectedWardCode"
+            >
+              <option [ngValue]="0">Phường/Xã</option>
+              <option *ngFor="let ward of wards" [ngValue]="ward.wardCode">
+                {{ ward.wardName }}
+              </option>
+            </select>
+            <div class="divider-nospace"></div>
           </div>
           <div class="form-group">
             <div class="form-check checkbox-text">
@@ -159,17 +204,15 @@
               </span>
             </div>
           </div>
-          <button
-            type="button"
-            (click)="register()"
-            class="register-button"
-          >
+          <button type="button" (click)="register()" class="register-button">
             Đăng ký
           </button>
           <div class="divider"></div>
           <p class="text-center">
             Bạn đã có tài khoản?
-            <span> <a href="#" class="register-link">Đăng nhập</a></span>
+            <span>
+              <a routerLink="/login" class="register-link">Đăng nhập</a></span
+            >
           </p>
         </div>
       </div>
