@@ -50,16 +50,34 @@ public class WebSecurityConfig {
                                     String.format("%s/users/register", apiPrefix)).permitAll()
 
                             .requestMatchers(HttpMethod.GET,
-                                    String.format("%s/categories**", apiPrefix)).permitAll()
+                                    String.format("%s/categories/**", apiPrefix)).permitAll()
 
                             .requestMatchers(HttpMethod.GET,
-                                    String.format("%s/roles**", apiPrefix)).permitAll()
+                                    String.format("%s/roles/**", apiPrefix)).permitAll()
+
+                            .requestMatchers(HttpMethod.GET,
+                                    String.format("%s/products/images/**", apiPrefix)).permitAll()
+
+                            .requestMatchers(HttpMethod.GET,
+                                    String.format("%s/providers", apiPrefix)).permitAll()
 
                             .requestMatchers(HttpMethod.GET,
                                     String.format("%s/products/**", apiPrefix)).permitAll()
 
                             .requestMatchers(HttpMethod.GET,
-                                    String.format("%s/products/by-ids**", apiPrefix)).permitAll()
+                                    String.format("%s/products/by-ids/**", apiPrefix)).permitAll()
+
+                            .requestMatchers(HttpMethod.DELETE,
+                                    String.format("%s/products/**", apiPrefix)).hasRole("ADMIN")
+
+                            .requestMatchers(HttpMethod.POST,
+                                    String.format("%s/products/**", apiPrefix)).hasRole("ADMIN")
+
+                            .requestMatchers(HttpMethod.PUT,
+                                    String.format("%s/products/**", apiPrefix)).hasRole("ADMIN")
+
+                            .requestMatchers(HttpMethod.POST,
+                                    String.format("%s/providers", apiPrefix)).hasRole("ADMIN")
 
                             .anyRequest().authenticated();
                 })

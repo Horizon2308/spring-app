@@ -33,14 +33,20 @@ public class Product extends BaseEntity {
 
     @Column(name = "active")
     @JsonProperty("is_active")
-    private int isActive;
+    private int active;
 
     private Long quantity;
+
+    private int status;
 
     @OneToMany(mappedBy = "product",
                cascade = CascadeType.ALL,
                fetch = FetchType.LAZY)
     private List<ProductImage> productImages;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    private Provider provider;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

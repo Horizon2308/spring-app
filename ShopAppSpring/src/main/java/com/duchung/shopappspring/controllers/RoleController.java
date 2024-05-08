@@ -21,4 +21,5 @@ public class RoleController {
     public ResponseEntity<List<Role>> getAllRoles() {
         return ResponseEntity.ok().body(roleService.getAllRoles());
     }
+
 }

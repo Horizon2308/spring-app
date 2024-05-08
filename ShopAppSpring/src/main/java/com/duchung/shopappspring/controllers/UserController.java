@@ -10,10 +10,15 @@ import com.duchung.shopappspring.http_responses.ErrorResponse;
 import com.duchung.shopappspring.http_responses.SuccessResponse;
 import com.duchung.shopappspring.models.User;
 import com.duchung.shopappspring.responses.AuthenticationResponse;
+import com.duchung.shopappspring.responses.ProductListResponse;
+import com.duchung.shopappspring.responses.UserListResponse;
 import com.duchung.shopappspring.responses.UserResponse;
 import com.duchung.shopappspring.services.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +35,27 @@ import java.util.List;
 public class UserController {
 
     private final IUserService userService;
+
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllStaffs(@RequestParam(defaultValue = "", value = "keyword") String keyword,
+                                          @RequestParam(defaultValue = "0") Integer page,
+                                          @RequestParam(defaultValue = "10") Integer limit) {
+        var staffs = userService.getAllStaffs(keyword,
+                PageRequest.of(page, limit, Sort.by("id").ascending()));
+        int totalPage = staffs.getTotalPages();
+        if (totalPage == 0) {
+            return ResponseEntity.ok(new SuccessResponse<>("Staffs page is empty!"));
+        }
+        if (staffs.getContent().isEmpty()) {
+            return ResponseEntity.ok(new SuccessResponse<>("Staffs page is empty!"));
+        }
+        return ResponseEntity.ok().body(new SuccessResponse<>(UserListResponse.builder()
+                .users(staffs)
+                .totalPage(totalPage)
+                .build(),
+                "Get all staffs"));
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserDTO userDTO,

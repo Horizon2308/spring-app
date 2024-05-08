@@ -6,13 +6,17 @@ import com.duchung.shopappspring.exceptions.DataExistedException;
 import com.duchung.shopappspring.exceptions.DataNotFoundException;
 import com.duchung.shopappspring.models.Category;
 import com.duchung.shopappspring.models.Product;
+import com.duchung.shopappspring.models.Provider;
 import com.duchung.shopappspring.repositories.CategoryRepository;
 import com.duchung.shopappspring.repositories.ProductRepository;
+import com.duchung.shopappspring.repositories.ProviderRepository;
 import com.duchung.shopappspring.responses.ProductResponse;
+import com.duchung.shopappspring.responses.ProductWithoutCategoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,12 +27,15 @@ public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProviderRepository providerRepository;
 
     @Override
     public Page<ProductResponse> getAllProducts(Long categoryId, String keyword, Pageable pageable) {
         return productRepository.searchProducts(categoryId, keyword, pageable)
                 .map(this::convertToProductResponse);
     }
+
+    @Transactional
     @Override
     public ProductResponse createProduct(ProductDTO productDTO) throws Exception {
         if (existedByProductName(productDTO.getName())) {
@@ -37,22 +44,25 @@ public class ProductService implements IProductService {
         // convert productDTO to product entity to save product
         Product newProduct =  convertToProduct(productDTO,
                 categoryRepository.findById(productDTO.getCategoryId())
-                        .orElseThrow(() -> new DataNotFoundException("Category not found!")));
+                        .orElseThrow(() -> new DataNotFoundException("Category not found!")),
+                providerRepository.findById(productDTO.getProviderId())
+                        .orElseThrow(() -> new DataNotFoundException("Provider not found!")));
         // convert product to product response to send to client
         productRepository.save(newProduct);
         return convertToProductResponse(newProduct);
     }
 
     @Override
-    public ProductResponse getProductById(Long productId) throws DataNotFoundException {
+    public ProductWithoutCategoryResponse getProductById(Long productId) throws DataNotFoundException {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new DataNotFoundException("Product not found!"));
-        return ProductResponse.builder()
+        return ProductWithoutCategoryResponse.builder()
                 .id(product.getId())
                 .categoryId(product.getCategory().getId())
                 .description(product.getDescription())
                 .thumbnail(product.getThumbnail())
                 .quantity(product.getQuantity())
+                .status(product.getStatus())
                 .price(product.getPrice())
                 .name(product.getName())
                 .isActive(IsActive.ENABLE)
@@ -60,6 +70,7 @@ public class ProductService implements IProductService {
                 .build();
     }
 
+    @Transactional
     @Override
     public ProductResponse updateProduct(Long productId, ProductDTO productDTO) throws DataNotFoundException {
         Product updatedProduct = productRepository.findById(productId)
@@ -68,6 +79,7 @@ public class ProductService implements IProductService {
         updatedProduct.setPrice(productDTO.getPrice());
         updatedProduct.setQuantity(productDTO.getQuantity());
         updatedProduct.setDescription(productDTO.getDescription());
+        updatedProduct.setStatus(productDTO.getStatus());
         updatedProduct.setThumbnail(productDTO.getThumbnail());
         updatedProduct.setCategory(categoryRepository.findById(productDTO.getCategoryId())
                 .orElseThrow(() -> new DataNotFoundException("Category not found!")));
@@ -75,11 +87,12 @@ public class ProductService implements IProductService {
         return convertToProductResponse(product);
     }
 
+    @Transactional
     @Override
     public void deleteProduct(Long productId) throws DataNotFoundException {
         Product deletedProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new DataNotFoundException("Product not found!"));
-        deletedProduct.setIsActive(IsActive.DISABLE);
+        deletedProduct.setActive(IsActive.DISABLE);
     }
 
     @Override
@@ -92,7 +105,7 @@ public class ProductService implements IProductService {
         return productRepository.findProductsByIds(ids);
     }
 
-    private Product convertToProduct(ProductDTO productDTO, Category category) {
+    private Product convertToProduct(ProductDTO productDTO, Category category, Provider provider) {
         return Product.builder()
                 .name(productDTO.getName())
                 .thumbnail(productDTO.getThumbnail())
@@ -100,19 +113,22 @@ public class ProductService implements IProductService {
                 .description(productDTO.getDescription())
                 .category(category)
                 .quantity(productDTO.getQuantity())
-                .isActive(IsActive.ENABLE)
+                .status(productDTO.getStatus())
+                .provider(provider)
+                .active(IsActive.ENABLE)
                 .build();
     }
 
     private ProductResponse convertToProductResponse(Product product) {
         ProductResponse productResponse = ProductResponse.builder()
                 .id(product.getId())
-                .categoryId(product.getCategory().getId())
+                .category(product.getCategory())
                 .description(product.getDescription())
                 .thumbnail(product.getThumbnail())
                 .price(product.getPrice())
                 .name(product.getName())
                 .quantity(product.getQuantity())
+                .status(product.getStatus())
                 .isActive(IsActive.ENABLE)
                 .build();
         productResponse.setCreateAt(product.getCreateAt());

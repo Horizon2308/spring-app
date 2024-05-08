@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   CanActivateFn,
 } from '@angular/router';
-import { TokenService } from '../services/token.service';
+import { TokenService } from '../user/services/token.service';
 import { Router } from '@angular/router'; // Đảm bảo bạn đã import Router ở đây.
 import { inject } from '@angular/core';
 

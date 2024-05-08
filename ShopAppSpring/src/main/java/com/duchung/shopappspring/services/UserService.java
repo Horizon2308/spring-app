@@ -1,6 +1,7 @@
 package com.duchung.shopappspring.services;
 
 import com.duchung.shopappspring.components.JwtTokenUtils;
+import com.duchung.shopappspring.domains.IsActive;
 import com.duchung.shopappspring.dtos.UserDTO;
 import com.duchung.shopappspring.dtos.UserLoginDTO;
 import com.duchung.shopappspring.exceptions.*;
@@ -8,11 +9,15 @@ import com.duchung.shopappspring.models.Role;
 import com.duchung.shopappspring.models.User;
 import com.duchung.shopappspring.repositories.RoleRepository;
 import com.duchung.shopappspring.repositories.UserRepository;
+import com.duchung.shopappspring.responses.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,6 +31,7 @@ public class UserService implements IUserService {
     private final JwtTokenUtils jwtTokenUtils;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     @Override
     public User createUser(UserDTO userDTO) throws DataNotFoundException, DataExistedException, InvalidParameterException {
         if (userRepository.existsUserByPhoneNumber(userDTO.getPhoneNumber())) {
@@ -40,7 +46,7 @@ public class UserService implements IUserService {
                 .address(userDTO.getAddress())
                 .googleAccountId(userDTO.getFacebookAccountId())
                 .facebookAccountId(userDTO.getFacebookAccountId())
-                .isActive(true)
+                .isActive(IsActive.ENABLE)
                 .phoneNumber(userDTO.getPhoneNumber())
                 .build();
         Role role = roleRepository.findById(userDTO.getRoleId())
@@ -88,5 +94,10 @@ public class UserService implements IUserService {
         } else {
             throw new Exception("User not found");
         }
+    }
+
+    @Override
+    public Page<UserResponse> getAllStaffs(String keyword, Pageable pageable) {
+        return userRepository.searchStaffs(keyword, pageable).map(UserResponse::fromUser);
     }
 }

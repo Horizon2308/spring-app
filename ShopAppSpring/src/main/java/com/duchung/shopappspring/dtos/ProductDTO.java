@@ -29,6 +29,12 @@ public class ProductDTO {
 
     private String description;
 
+    @JsonProperty("provider_id")
+    private Long providerId;
+
+    @JsonProperty("product_status")
+    private int status;
+
     private List<MultipartFile> files;
 
     @JsonProperty("category_id")

@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { DetailProductComponent } from './detail-product/detail-product.component';
-import { OrderComponent } from './order/order.component';
-import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './user/components/home/home.component';
+import { FooterComponent } from './user/components/footer/footer.component';
+import { DetailProductComponent } from './user/components/detail-product/detail-product.component';
+import { OrderComponent } from './user/components/order/order.component';
+import { OrderConfirmComponent } from './user/components/order-confirm/order-confirm.component';
+import { LoginComponent } from './user/components/login/login.component';
+import { RegisterComponent } from './user/components/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
@@ -15,7 +14,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app/app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileComponent } from './user/components/user-profile/user-profile.component';
+import { HeaderComponent } from './user/components/header/header.component';
+import { HomeAdminComponent } from './admin/components/home-admin/home-admin.component';
+import { ProductManagermentComponent } from './admin/components/product-managerment/product-managerment.component';
+import { HeaderAdminComponent } from './admin/components/header-admin/header-admin.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogBodyComponent } from './ultils/dialog-body/dialog-body.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogConfirmComponent } from './ultils/dialog-confirm/dialog-confirm.component';
+import { AddProductComponent } from './admin/components/add-product/add-product.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { StaffManagermentComponent } from './admin/components/staff-managerment/staff-managerment.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +44,13 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     RegisterComponent,
     AppComponent,
     UserProfileComponent,
+    HomeAdminComponent,
+    ProductManagermentComponent,
+    HeaderAdminComponent,
+    DialogBodyComponent,
+    DialogConfirmComponent,
+    AddProductComponent,
+    StaffManagermentComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +59,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ReactiveFormsModule,
     AppRoutingModule,
     NgbModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    CKEditorModule,
   ],
   providers: [
     {
@@ -49,6 +76,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
   bootstrap: [
     // HomeComponent,
     AppComponent,
+    // HomeAdminComponent,
     // DetailProductComponent,
     // OrderComponent,
     // OrderConfirmComponent,

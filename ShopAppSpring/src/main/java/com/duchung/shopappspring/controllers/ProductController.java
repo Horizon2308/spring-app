@@ -9,6 +9,7 @@ import com.duchung.shopappspring.models.Product;
 import com.duchung.shopappspring.responses.ProductImageResponse;
 import com.duchung.shopappspring.responses.ProductListResponse;
 import com.duchung.shopappspring.responses.ProductResponse;
+import com.duchung.shopappspring.responses.ProductWithoutCategoryResponse;
 import com.duchung.shopappspring.services.ICategoryService;
 import com.duchung.shopappspring.services.IProductImageService;
 import com.duchung.shopappspring.services.IProductService;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +60,31 @@ public class ProductController {
         if (totalPage == 0) {
             return ResponseEntity.ok(new SuccessResponse<>("Products page is empty!"));
         }
+        if (products.getContent().isEmpty()) {
+            return ResponseEntity.ok(new SuccessResponse<>("Products page is empty!"));
+        }
+        return ResponseEntity.ok().body(new SuccessResponse<>(ProductListResponse.builder()
+                .productResponses(products)
+                .totalPage(totalPage)
+                .build(),
+                "Get all products"));
+    }
+
+    @GetMapping("with-category")
+    public ResponseEntity<BaseResponse<ProductListResponse>> getAllProductsWithCategory(
+            @RequestParam(defaultValue = "0", value = "category_id") Long categoryId,
+            @RequestParam(defaultValue = "", value = "keyword") String keyword,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "12") Integer limit) {
+        Page<ProductResponse> products = productService.getAllProducts(
+                categoryId,
+                keyword,
+                PageRequest.of(page, limit,
+                        Sort.by("id").ascending()));
+        int totalPage = products.getTotalPages();
+        if (totalPage == 0) {
+            return ResponseEntity.ok(new SuccessResponse<>("Products page is empty!"));
+        }
         if (products.getContent().size() == 0) {
             return ResponseEntity.ok(new SuccessResponse<>("Products page is empty!"));
         }
@@ -71,7 +98,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getProduct(@PathVariable("id") Long productId) {
         try {
-            ProductResponse productResponse = productService.getProductById(productId);
+            ProductWithoutCategoryResponse productResponse = productService.getProductById(productId);
             return ResponseEntity.ok(new SuccessResponse<>(productResponse, "Get product successfully"));
         } catch (DataNotFoundException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
@@ -86,6 +113,8 @@ public class ProductController {
         List<Product> products = productService.findProductsByIds(productIds);
         return ResponseEntity.ok().body(products);
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping(value = "")
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDTO productDTO,
                                             BindingResult result) {
@@ -133,11 +162,27 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable("id") Long productId) {
-        return ResponseEntity.accepted().body("Update product has id: " + productId);
+    public ResponseEntity<?> updateProduct(@PathVariable("id") Long productId,
+                                           @Valid @RequestBody ProductDTO productDTO,
+                                           BindingResult result) {
+        try {
+            if (result.hasErrors()) {
+                List<String> errorMessages = result.getFieldErrors().stream()
+                        .map(FieldError::getDefaultMessage)
+                        .toList();
+                return ResponseEntity.badRequest().body(errorMessages);
+            }
+            return ResponseEntity.accepted().body(new SuccessResponse<>(
+                    productService.updateProduct(productId, productDTO),
+                    "Update product has id: " + productId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
+        }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long productId) {
         try {
@@ -148,6 +193,7 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/fake-data")
     public void fakeData() {
         Faker faker = new Faker();

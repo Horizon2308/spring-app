@@ -74,12 +74,25 @@ public class ProductImageService implements IProductImageService {
                                                            List<MultipartFile> files)
             throws DataNotFoundException, IOException, InvalidParameterException {
         List<ProductImageResponse> productImageResponses = new ArrayList<>();
-        for (var file : files) {
-           String fileName = storeFile(handleMultipartFile(file));
-           productImageResponses.add(createProductImage(ProductImageDTO.builder()
-                   .productId(productId)
-                   .url(fileName)
-                   .build()));
+//        for (var file : files) {
+//           String fileName = storeFile(handleMultipartFile(file));
+//           productImageResponses.add(createProductImage(ProductImageDTO.builder()
+//                   .productId(productId)
+//                   .url(fileName)
+//                   .build()));
+//        }
+        for (int i = 0; i < files.size(); i++) {
+            String fileName = storeFile(handleMultipartFile(files.get(i)));
+            productImageResponses.add(createProductImage(ProductImageDTO.builder()
+                    .productId(productId)
+                    .url(fileName)
+                    .build()));
+            if (i == 0) {
+                Product product = productRepository.findById(productId)
+                        .orElseThrow(() -> new DataNotFoundException("Product not found!"));
+                product.setThumbnail(fileName);
+                productRepository.save(product);
+            }
         }
         return productImageResponses;
     }

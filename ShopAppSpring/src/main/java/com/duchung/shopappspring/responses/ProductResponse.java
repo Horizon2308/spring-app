@@ -1,5 +1,6 @@
 package com.duchung.shopappspring.responses;
 
+import com.duchung.shopappspring.models.Category;
 import com.duchung.shopappspring.models.ProductImage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -25,11 +26,15 @@ public class ProductResponse extends BaseResponse {
 
     private Long quantity;
 
+    @JsonProperty("product_status")
+    private int status;
+
     @JsonProperty("is_active")
     private int isActive;
 
     @JsonProperty("product_images")
     private List<ProductImage> productImages;
 
-    private Long categoryId;
+    @JsonProperty("category")
+    private Category category;
 }

@@ -35,9 +35,11 @@ public class User extends BaseEntity implements UserDetails {
 
     private String address;
 
-    private boolean isActive;
+    private int isActive;
 
     private Date dateOfBirth;
+
+    private String avatar;
 
     private int facebookAccountId;
 
