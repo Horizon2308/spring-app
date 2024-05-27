@@ -44,7 +44,7 @@ table {
 }
 th,
 td {
-    padding: 10px;
+    padding: 10px 6px;
     text-align: center;
 }
 .product-info {
@@ -68,7 +68,10 @@ td {
     color: white;
     border-radius: 30px;
     width: 200px;
-  }
+    padding: 11px;
+}
+
   h5,h3{
     color:black;
   }
+ 

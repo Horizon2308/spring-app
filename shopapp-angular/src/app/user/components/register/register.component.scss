@@ -49,7 +49,7 @@
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
-    color: rgb(179,206,229);
+    color: rgb(1, 1, 1);
     cursor: pointer;
 }
 
@@ -64,7 +64,7 @@
 /* Màu checkbox khi được chọn */
 .checkbox-text input[type="checkbox"]:checked {
     border-color: white;
-    background-color: rgb(247,202,201);
+    background: linear-gradient(to right, rgb(225, 64, 180), rgb(126, 43, 237));
 }
 
 .form-check-input {
@@ -77,13 +77,16 @@
 }
 
 .register-button {
-    background: linear-gradient(to right,rgb(247,202,201), rgb(253,219,219), rgb(208,228,245), rgb(179,206,229));
+    background: linear-gradient(to right, rgb(225, 64, 180), rgb(126, 43, 237));
+    // background: linear-gradient(to right,rgb(247,202,201), rgb(253,219,219), rgb(208,228,245), rgb(179,206,229));
     color: black;
     border-radius: 30px;
     width: 100%;
     padding: 10px 0;
     margin-top: 20px;
     border: none;
+    font-size: 20px;
+    font-weight: 100;
 }
 
 .divider {

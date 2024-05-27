@@ -62,8 +62,8 @@
     <div class="col-md-6">
       <div class="product-details">
         <h2>{{ product?.name }}</h2>
-        <p>{{ product?.description }}</p>
-        <p>Giá: ${{ product?.price }}</p>
+        <!-- <p>{{ product?.description }}</p> -->
+        <p>Giá: {{ product?.price }} vnđ</p>
         <p>Số lượng tồn ở kho: {{ product?.quantity }} sản phẩm</p>
         <!-- <p>Tổng tiền: ${{ getTotalPrice() | number:'1.2-2' }}</p> -->
         <div class="product-actions">
@@ -79,8 +79,17 @@
             <button (click)="increaseQuantity()">+</button>
           </div>
         </div>
+
       </div>
+      <div class="description-container">
+        <div class="description-title">Mô tả Sản Phẩm</div>
+        <p class="description-text">
+          {{ product?.description }} 
+        </p>
+    </div>
     </div>
   </div>
 </div>
-<app-footer></app-footer>
+<app-footer>
+  <footer></footer>
+</app-footer>

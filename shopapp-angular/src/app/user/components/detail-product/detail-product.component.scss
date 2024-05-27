@@ -1,13 +1,21 @@
 .intro-section {
-    color: white;
+    color: black;
     padding: 20px;
     text-align: center;
+    font-size: 50;
+    font-weight: 1000;
+    font-weight: bold;
+}
+.intro-section .h1{
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .product-image {
-    height: 100%;
+    height: 80%;
     width: 100%;
     object-fit: cover;
+    border-radius: 10px;
 }
 .thumbnail-container {
     display: flex;
@@ -19,7 +27,7 @@
 .thumbnail-item {
     width: 120px;
     height: 120px;
-    margin-right: 5px;
+    margin-right: 2px;
     /* Thêm khoảng cách ngang giữa các ảnh */
 }
 
@@ -32,13 +40,26 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 10px;
 }
-
+.carousel-control-prev-icon{
+    background-color: black;
+    width: 25px;
+    height: 40px;
+    border-radius: 2px;
+  }
+  .carousel-control-next-icon{
+    background-color: black;
+    width: 25px;
+    height: 40px;
+    border-radius: 2px;
+  }
 .thumbnail-item.active {
-    border: 2px solid white;
+    border: 2px solid yellow;
+    border-radius: 20px;
 }
 .product-details {
-    color: white;
+    color: black;
     padding: 20px;
 }
 
@@ -52,28 +73,28 @@
     margin-right: 10px;
 }
 .border-wrapper {
-    border: 1px solid white;      
+    border: 1px solid black;      
   }
 
-  .product-quantity {
+.product-quantity {
       display: flex;
       align-items: center;
       justify-content: flex-start;
       margin-top: 10px;
   }
 
-  .product-quantity button {
+.product-quantity button {
       background-color: transparent;
       border: none;
-      color: white;
-      font-size: 16px;
+      color: black;
+      font-size: 30px;
       cursor: pointer;
   }
   .product-quantity input {
     background-color: transparent;
     border: none;
-    color: white;
-    font-size: 16px;
+    color: black;
+    font-size: 20px;
     text-align: center;
     width: 40px;
     margin: 0 10px;
@@ -81,3 +102,20 @@
   .product-quantity input:focus {
     outline: none;
   }  
+  .description-container {
+    width: 60%;
+    margin: 0 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+.description-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.description-text {
+    font-size: 16px;
+    line-height: 1.5;
+}

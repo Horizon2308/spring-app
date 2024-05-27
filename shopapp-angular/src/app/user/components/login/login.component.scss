@@ -3,13 +3,14 @@
     height: 100vh;
 }
 .login-form {
-    background-color: white;
+    // background-color: white;
     border-radius: 10px;
     padding: 20px;
     max-width: 500px;
     border: 1px solid rgb(32, 34, 60);
-    align-items: center;
-    justify-content: center;
+    // align-items: center;
+    // justify-content: center;
+    background-color: white;
 }
 .login-header {
     text-align: center;
@@ -18,16 +19,16 @@
 }
 
 .form-group{
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .form-control {
-    background-color: transparent;
+    
     border: none;
-    color: white;
+    color: black;
 }
 .form-control:focus {
-    color: white;
+    color: black;
     background-color: transparent;
     outline: none;
     border-color: transparent;    
@@ -38,15 +39,16 @@
 }
 
 .password-field {
-    position: relative;
+    // position: relative;
 }
 .password-toggle {
     position: absolute;
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
-    color: rgb(179,206,229);
+    color: rgb(16, 16, 17);
     cursor: pointer;
+    padding: 50px;
 }
 .checkbox-text {
     color: black;
@@ -57,16 +59,17 @@
 }
 /* Màu checkbox khi được chọn */
 .checkbox-text input[type="checkbox"]:checked {
-    border-color: white;
-    background-color: rgb(247,202,201);
+    border-color: black;
+    background: linear-gradient(to right, rgb(225, 64, 180), rgb(126, 43, 237));
 }
 
 .form-check-input {
-    margin-right: 5px;
+    
+    margin: 0 -20px;
 }
 
 .register-link {
-    color: rgb(243, 165, 42);
+    color: rgb(245, 48, 48);
     text-decoration: none;
 }
 .access-right {
@@ -98,13 +101,16 @@
 }
 
 .login-button {
-    background: linear-gradient(to right, rgb(247,202,201), rgb(253,219,219), rgb(208,228,245), rgb(179,206,229));
-    color: black;
+    background: linear-gradient(to right, rgb(225, 64, 180), rgb(126, 43, 237));
+    // background: linear-gradient(to right, rgb(247,202,201), rgb(253,219,219), rgb(208,228,245), rgb(179,206,229));
+    color: white;
     border-radius: 30px;
     width: 100%;
     padding: 10px 0;
     margin-top: 20px;
     border: none;
+    font-size: 20px;
+    font-weight: 100;
 }
 .divider {
     height: 2px;

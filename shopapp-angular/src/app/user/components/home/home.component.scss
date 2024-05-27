@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 .intro-section {
     text-align: center;
     color: black;
@@ -24,7 +18,8 @@
 
 .search-input {
     width: 300px;
-    background-color: rgb(19, 23, 42);
+    // background-color: rgb(19, 23, 42);
+    background-color: white;
     margin-right: 10px;
     border-color: rgba(255, 255, 255, 0.5);
     color: white;
@@ -34,12 +29,13 @@
     padding: 10px 10px;
     color: black;
     text-align: center;
+    background-color: white;
     
 }
 
 .form-control::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(255, 255, 255, 0.5);
+    color:black;
     opacity: 1;
     /* Firefox */
 }
@@ -62,7 +58,9 @@
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 20px;
+    width: 80%;
 }
+
 
 .product-image {
     width: 100%;
@@ -72,6 +70,9 @@
 
 .product-name {
     color: white;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 1000;
 }
 
 .product-description {
@@ -84,6 +85,9 @@
 
 .product-price {
     color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .product-rating {
