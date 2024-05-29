@@ -15,6 +15,7 @@ import com.duchung.shopappspring.repositories.OrderRepository;
 import com.duchung.shopappspring.repositories.ProductRepository;
 import com.duchung.shopappspring.repositories.UserRepository;
 import com.duchung.shopappspring.responses.OrderResponse;
+import com.duchung.shopappspring.responses.OrderStatisticResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -96,8 +97,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Page<OrderResponse> getAllOrders(Pageable pageable) {
-        return orderRepository.findAll(pageable)
+    public Page<OrderResponse> getAllOrders(Pageable pageable, String keyword) {
+        return orderRepository.searchOrder(keyword, pageable)
                 .map(this::convertToOrderResponse);
     }
 
@@ -142,18 +143,31 @@ public class OrderService implements IOrderService {
 
     @Transactional
     @Override
-    public OrderResponse updateStatus(Long orderId, String newStatus, String shippingDate)
+    public OrderResponse updateStatus(Long orderId, String newStatus)
             throws DataNotFoundException, InvalidParameterException {
         Order updatedOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new DataNotFoundException("Order not found!"));
         updatedOrder.setStatus(newStatus);
-        if (shippingDate != null) {
-            LocalDate date = LocalDate.parse(shippingDate);
-            if (date.isBefore(LocalDate.now())) {
-                throw new InvalidParameterException("Invalid date");
-            }
-        }
         return convertToOrderResponse(orderRepository.save(updatedOrder));
+    }
+
+    @Override
+    public int countOrders() {
+        return orderRepository.countAllBy();
+    }
+
+    @Override
+    public List<OrderStatisticResponse> getLatestOrder() {
+        return orderRepository.findTop4ByOrderByIdDesc().stream().map(this::convertToOrderStatistic).toList();
+    }
+
+    private OrderStatisticResponse convertToOrderStatistic(Order order) {
+        return OrderStatisticResponse.builder()
+                .id(order.getId())
+                .userName(order.getFullName())
+                .totalMoney(order.getTotalMoney())
+                .status(order.getStatus())
+                .build();
     }
 
     private Order convertToOrder(OrderDTO orderDTO, User user) {

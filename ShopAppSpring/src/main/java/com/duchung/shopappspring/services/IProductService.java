@@ -19,4 +19,6 @@ public interface IProductService {
     void deleteProduct(Long productId) throws DataNotFoundException;
     boolean existedByProductName(String productName);
     List<Product> findProductsByIds(List<Long> ids);
+    int countProducts();
+    int countProductsSoldOut();
 }

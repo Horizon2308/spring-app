@@ -72,7 +72,7 @@
       <hr />
       <ul class="app-menu">
         <li>
-          <a class="app-menu__item haha" href="phan-mem-ban-hang.html"
+          <a class="app-menu__item haha" routerLink="/admin/pos-counter"
             ><i class="app-menu__icon bx bx-cart-alt"></i>
             <span class="app-menu__label">POS Bán Hàng</span></a
           >
@@ -102,7 +102,7 @@
           >
         </li>
         <li>
-          <a class="app-menu__item" href="table-data-oder.html"
+          <a class="app-menu__item" routerLink="/admin/orders-manager"
             ><i class="app-menu__icon bx bx-task"></i
             ><span class="app-menu__label">Quản lý đơn hàng</span></a
           >
@@ -162,7 +162,9 @@
                 <i class="icon bx bxs-user-account fa-3x"></i>
                 <div class="info">
                   <h4>Tổng khách hàng</h4>
-                  <p><b>56 khách hàng</b></p>
+                  <p>
+                    <b>{{ numberOfCustomers }} khách hàng</b>
+                  </p>
                   <p class="info-tong">Tổng số khách hàng được quản lý.</p>
                 </div>
               </div>
@@ -173,7 +175,9 @@
                 <i class="icon bx bxs-data fa-3x"></i>
                 <div class="info">
                   <h4>Tổng sản phẩm</h4>
-                  <p><b>1850 sản phẩm</b></p>
+                  <p>
+                    <b>{{ numberOfProducts }} sản phẩm</b>
+                  </p>
                   <p class="info-tong">Tổng số sản phẩm được quản lý.</p>
                 </div>
               </div>
@@ -184,7 +188,9 @@
                 <i class="icon bx bxs-shopping-bags fa-3x"></i>
                 <div class="info">
                   <h4>Tổng đơn hàng</h4>
-                  <p><b>247 đơn hàng</b></p>
+                  <p>
+                    <b>{{ numberOfOrders }} đơn hàng</b>
+                  </p>
                   <p class="info-tong">Tổng số hóa đơn bán hàng trong tháng.</p>
                 </div>
               </div>
@@ -194,8 +200,10 @@
               <div class="widget-small danger coloured-icon">
                 <i class="icon bx bxs-error-alt fa-3x"></i>
                 <div class="info">
-                  <h4>Sắp hết hàng</h4>
-                  <p><b>4 sản phẩm</b></p>
+                  <h4>Đã hết hàng</h4>
+                  <p>
+                    <b>{{ numberOfProductsSoldOut }} sản phẩm</b>
+                  </p>
                   <p class="info-tong">
                     Số sản phẩm cảnh báo hết cần nhập thêm.
                   </p>
@@ -217,13 +225,27 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>AL3947</td>
-                        <td>Phạm Thị Ngọc</td>
-                        <td>19.770.000 đ</td>
-                        <td><span class="badge bg-info">Chờ xử lý</span></td>
+                      <tr *ngFor="let order of latestOrders">
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.user_name }}</td>
+                        <td>{{ order.total_money }} vnd</td>
+                        <td *ngIf="order.status.includes('pending')">
+                          <span class="badge bg-info">Chờ xử lý</span>
+                        </td>
+                        <td *ngIf="order.status.includes('shipped')">
+                          <span class="badge bg-warning">Đang vận chuyển</span>
+                        </td>
+                        <td *ngIf="order.status.includes('delivered')">
+                          <span class="badge bg-success">Đã hoàn thành</span>
+                        </td>
+                        <td *ngIf="order.status.includes('processing')">
+                          <span class="badge bg-success">Xác nhận</span>
+                        </td>
+                        <td *ngIf="order.status.includes('cancelled')">
+                          <span class="badge bg-danger">Đã hủy</span>
+                        </td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <td>ER3835</td>
                         <td>Nguyễn Thị Mỹ Yến</td>
                         <td>16.770.000 đ</td>
@@ -244,7 +266,7 @@
                         <td>Đặng Hoàng Phúc</td>
                         <td>40.650.000 đ</td>
                         <td><span class="badge bg-danger">Đã hủy </span></td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
                 </div>
@@ -262,36 +284,20 @@
                       <tr>
                         <th>ID</th>
                         <th>Tên khách hàng</th>
-                        <th>Ngày sinh</th>
+                        <th>Địa chỉ</th>
                         <th>Số điện thoại</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>#183</td>
-                        <td>Hột vịt muối</td>
-                        <td>21/7/1992</td>
-                        <td><span class="tag tag-success">0921387221</span></td>
-                      </tr>
-                      <tr>
-                        <td>#219</td>
-                        <td>Bánh tráng trộn</td>
-                        <td>30/4/1975</td>
-                        <td><span class="tag tag-warning">0912376352</span></td>
-                      </tr>
-                      <tr>
-                        <td>#627</td>
-                        <td>Cút rang bơ</td>
-                        <td>12/3/1999</td>
+                      <tr *ngFor="let customer of latestCustomers">
+                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.user_name }}</td>
+                        <td>{{ customer.address }}</td>
                         <td>
-                          <span class="tag tag-primary">01287326654</span>
+                          <span class="tag tag-success">{{
+                            customer.phone_number
+                          }}</span>
                         </td>
-                      </tr>
-                      <tr>
-                        <td>#175</td>
-                        <td>Hủ tiếu nam vang</td>
-                        <td>4/12/20000</td>
-                        <td><span class="tag tag-danger">0912376763</span></td>
                       </tr>
                     </tbody>
                   </table>

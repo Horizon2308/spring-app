@@ -105,6 +105,16 @@ public class ProductService implements IProductService {
         return productRepository.findProductsByIds(ids);
     }
 
+    @Override
+    public int countProducts() {
+        return productRepository.countAllBy();
+    }
+
+    @Override
+    public int countProductsSoldOut() {
+        return productRepository.countAllByQuantity(0L);
+    }
+
     private Product convertToProduct(ProductDTO productDTO, Category category, Provider provider) {
         return Product.builder()
                 .name(productDTO.getName())

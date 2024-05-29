@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, ElementRef, Injectable, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ProductService } from '../../services/products.service';
 import { Product } from '../../models/product';
 import { environment } from 'src/app/user/environments/environment';
@@ -32,11 +32,20 @@ export class ProductManagermentComponent implements OnInit {
   categories: Category[] = [];
   user: string = '';
 
+  @ViewChild('closeUpdate', { static: false }) closeUpdate:
+    | ElementRef
+    | undefined;
+
+  // @ViewChild('closeCategory', { static: false }) closeCategory:
+  //   | ElementRef
+  //   | undefined;
+
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
     private userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private renderer: Renderer2
   ) {}
   ngOnInit(): void {
     this.user = this.userService.getUserResponseFromLocalStorage()!.fullname;
@@ -194,6 +203,9 @@ export class ProductManagermentComponent implements OnInit {
                 this.currentPage,
                 this.itemsPerPage
               );
+              this.renderer
+                .selectRootElement(this.closeUpdate!.nativeElement)
+                .click();
             }
           });
         },
@@ -210,6 +222,9 @@ export class ProductManagermentComponent implements OnInit {
           });
           dialogConfirm.afterClosed().subscribe((result) => {
             if (result) {
+              this.renderer
+                .selectRootElement(this.closeUpdate!.nativeElement)
+                .click();
             }
           });
         },

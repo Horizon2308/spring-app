@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { RegisterDTO } from '../dtos/register.dto';
@@ -7,6 +7,8 @@ import { LoginDTO } from '../dtos/login.dto';
 import { environment } from '../environments/environment';
 import { UserResponse } from '../../responses/user/user.response';
 import { UpdateUserDTO } from '../dtos/update.user.dto';
+import { UserDTO } from 'src/app/admin/dtos/user.dto';
+import { InsertStaffDTO } from 'src/app/admin/dtos/insert.staff.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,8 @@ export class UserService {
   private urlLogin = `${environment.apiBaseUrl}/users/login`;
 
   private apiUserDetail = `${environment.apiBaseUrl}/users/details`;
+
+  private urlUsers = `${environment.apiBaseUrl}/users`;
 
   constructor(private http: HttpClient) {}
   register(registerDTO: RegisterDTO): Observable<any> {
@@ -100,5 +104,49 @@ export class UserService {
         }),
       }
     );
+  }
+
+  getAllStaffs(keyword: string, page: number, limit: number): Observable<any> {
+    const params = new HttpParams()
+      .set('keyword', keyword)
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get(`${this.urlUsers}/staffs`, { params });
+  }
+
+  getAllCustomers(
+    keyword: string,
+    page: number,
+    limit: number
+  ): Observable<any> {
+    const params = new HttpParams()
+      .set('keyword', keyword)
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get(`${this.urlUsers}/customers`, { params });
+  }
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.urlUsers}/${id}`);
+  }
+
+  getUser(id: number) {
+    return this.http.get(`${this.urlUsers}/${id}`);
+  }
+
+  updateUser(id: number, userDTO: UserDTO): Observable<any> {
+    return this.http.put<any>(`${this.urlUsers}/${id}`, userDTO);
+  }
+
+  insertStaff(userDTO: InsertStaffDTO): Observable<any> {
+    return this.http.post(this.urlRegister, userDTO, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  uploadImages(id: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    // Upload images for the specified product id
+    return this.http.post(`${this.urlUsers}/uploads/${id}`, formData);
   }
 }

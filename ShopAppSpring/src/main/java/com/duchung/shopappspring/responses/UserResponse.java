@@ -48,6 +48,7 @@ public class UserResponse {
                 .phoneNumber(user.getPhoneNumber())
                 .address(user.getAddress())
                 .active(user.getIsActive())
+                .avatar(user.getAvatar())
                 .dateOfBirth(user.getDateOfBirth())
                 .facebookAccountId(user.getFacebookAccountId())
                 .googleAccountId(user.getGoogleAccountId())

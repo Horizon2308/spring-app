@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,10 @@ public class OrderController {
     private final IOrderService orderService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllOrders(@RequestParam(value = "page", required = false) Integer page,
-                                         @RequestParam(value = "limit",required = false) Integer limit) {
-        Page<OrderResponse> orderResponseList = orderService.getAllOrders(PageRequest.of(page, limit));
+    public ResponseEntity<?> getAllOrders(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                          @RequestParam(value = "limit", defaultValue = "10") Integer limit,
+                                          @RequestParam(defaultValue = "", value = "keyword") String keyword) {
+        Page<OrderResponse> orderResponseList = orderService.getAllOrders(PageRequest.of(page, limit), keyword);
         int totalPage = orderResponseList.getTotalPages();
         if (totalPage == 0) {
             return ResponseEntity.ok(new SuccessResponse<>("Orders are empty!"));
@@ -109,21 +111,29 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/change-status/{id}/{new_status}/{shipping_date}")
-    public ResponseEntity<?> changeStatus(@PathVariable(value = "shipping_date", required = false)
-                                              String shippingDate,
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/change-status/{id}/{new_status}")
+    public ResponseEntity<?> changeStatus(
                                           @PathVariable("new_status") String newStatus,
                                           @PathVariable("id") Long orderId) {
-        if (newStatus.equals(OrderStatus.SHIPPED) && shippingDate == null) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<>("Shipping date can't be null!"));
-        }
         try {
-            return ResponseEntity.ok(new SuccessResponse<>(orderService.updateStatus(orderId, newStatus,
-                    shippingDate), "Changed status successfully"));
+            return ResponseEntity.ok(new SuccessResponse<>(orderService.updateStatus(orderId, newStatus), "Changed status successfully"));
         } catch (DataNotFoundException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
         } catch (InvalidParameterException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse<>("Invalid date"));
         }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/count")
+    public ResponseEntity<?> countOrders() {
+        return ResponseEntity.ok(new SuccessResponse<>(orderService.countOrders()));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/get-latest-orders")
+    public ResponseEntity<?> getLatestOrders() {
+        return ResponseEntity.ok(new SuccessResponse<>(orderService.getLatestOrder()));
     }
 }

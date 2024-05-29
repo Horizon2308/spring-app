@@ -59,6 +59,9 @@ public class WebSecurityConfig {
                                     String.format("%s/products/images/**", apiPrefix)).permitAll()
 
                             .requestMatchers(HttpMethod.GET,
+                                    String.format("%s/users/avatar/**", apiPrefix)).permitAll()
+
+                            .requestMatchers(HttpMethod.GET,
                                     String.format("%s/providers", apiPrefix)).permitAll()
 
                             .requestMatchers(HttpMethod.GET,

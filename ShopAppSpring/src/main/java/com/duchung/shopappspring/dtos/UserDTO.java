@@ -43,8 +43,15 @@ public class UserDTO {
     @JsonProperty("google_account_id")
     private int googleAccountId;
 
+    @JsonProperty("sex")
+    private int sex;
+
+    @JsonProperty("cic")
+    private String cic;
+
+    @JsonProperty("email")
+    private String email;
+
     @JsonProperty("role_id")
     private Long roleId;
-
-
 }

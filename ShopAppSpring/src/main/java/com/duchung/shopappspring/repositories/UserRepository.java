@@ -1,5 +1,6 @@
 package com.duchung.shopappspring.repositories;
 
+import com.duchung.shopappspring.models.Role;
 import com.duchung.shopappspring.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -19,4 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> searchStaffs(
             @Param("keyword") String keyword,
             Pageable pageable);
+
+    int countAllByRole(Role role);
+
+    List<User> findTop4ByOrderByIdDesc();
 }

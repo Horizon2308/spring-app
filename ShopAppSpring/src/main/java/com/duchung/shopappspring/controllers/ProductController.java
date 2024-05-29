@@ -211,4 +211,16 @@ public class ProductController {
             }
         }
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/count")
+    public ResponseEntity<?> countProducts() {
+        return ResponseEntity.ok(new SuccessResponse<>(productService.countProducts()));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/count/sold-out")
+    public ResponseEntity<?> countProductsSoldOut() {
+        return ResponseEntity.ok(new SuccessResponse<>(productService.countProductsSoldOut()));
+    }
 }

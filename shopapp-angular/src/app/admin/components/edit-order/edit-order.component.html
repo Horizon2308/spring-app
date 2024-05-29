@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi Tiết Đơn Hàng</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(to bottom, #e0eafc, #cfdef3);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+      }
+      header {
+        height: 60px;
+        background-color: #343a40;
+      }
+      .container-md {
+        margin-top: 30px;
+      }
+      .status,
+      .info {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 20px;
+      }
+      .tabs {
+        display: flex;
+        justify-content: space-around;
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
+      }
+      .tab-item {
+        padding: 10px 20px;
+        cursor: pointer;
+        color: #007bff;
+        transition: color 0.3s, border-bottom 0.3s;
+      }
+      .tab-item.active {
+        border-bottom: 3px solid #007bff;
+        font-weight: bold;
+        color: #0056b3;
+      }
+      .tab-item:hover {
+        color: #0056b3;
+      }
+      .info-order label {
+        font-weight: bold;
+        color: #555;
+      }
+      .info-order span,
+      .info-order input {
+        display: block;
+        padding: 12px;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        width: 100%;
+        transition: background-color 0.3s;
+      }
+      .info-order input:focus {
+        background-color: #e9ecef;
+      }
+      .action-buttons {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .action-buttons .btn {
+        margin: 0 10px;
+        font-size: 16px;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+      }
+      .action-buttons .btn:hover {
+        background-color: #007bff;
+        color: #fff;
+      }
+      .order-details h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #146c43;
+        font-size: 28px;
+      }
+      .order-details {
+        margin-bottom: 30px;
+      }
+      .order-details .col-md-6 {
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-md">
+      <div class="status p-4">
+        <div class="tabs">
+          <div
+            data-value="1"
+            id="tab_1"
+            class="tab-item"
+            [ngClass]="{ active: statusSelected == 1 }"
+            (click)="changeToPending()"
+          >
+            Chờ xác nhận
+          </div>
+          <div
+            data-value="3"
+            id="tab_3"
+            class="tab-item"
+            [ngClass]="{ active: statusSelected == 2 }"
+            (click)="changeToProcessing()"
+          >
+            Xác nhận
+          </div>
+          <div
+            data-value="4"
+            id="tab_4"
+            class="tab-item"
+            [ngClass]="{ active: statusSelected == 3 }"
+            (click)="changeToShipped()"
+          >
+            Đang giao hàng
+          </div>
+          <div
+            data-value="5"
+            id="tab_5"
+            class="tab-item"
+            [ngClass]="{ active: statusSelected == 4 }"
+            (click)="changeToDelivered()"
+          >
+            Đã giao hàng
+          </div>
+          <div
+            data-value="6"
+            id="tab_6"
+            class="tab-item"
+            [ngClass]="{ active: statusSelected == 5 }"
+            (click)="changeToSuccess()"
+          >
+            Thành công
+          </div>
+        </div>
+        <div class="d-flex justify-content-center action-buttons">
+          <button class="btn btn-primary" (click)="changeToProcessing()">
+            <i class="fas fa-check"></i> Xác Nhận
+          </button>
+          <button class="btn btn-danger" (click)="changeToCencelled()">
+            <i class="fas fa-times"></i> Hủy Đơn
+          </button>
+          <button class="btn btn-info">
+            <i class="fas fa-info-circle"></i> Chi Tiết
+          </button>
+        </div>
+      </div>
+
+      <div class="info p-4" *ngIf="orderResponse">
+        <div class="order-details">
+          <h2>THÔNG TIN ĐƠN HÀNG</h2>
+        </div>
+
+        <div class="row info-order">
+          <div class="col-md-6">
+            <label for="code">Mã Đơn Hàng</label>
+            <span id="code">{{ orderResponse.id }}</span>
+
+            <label for="orderType">Loại thanh toán</label>
+            <span id="orderType">{{ orderResponse.payment_method }}</span>
+
+            <label for="status">Trạng Thái</label>
+            <span
+              *ngIf="orderResponse.status.includes('delivered')"
+              class="badge bg-success"
+              >Đã giao</span
+            >
+            <span
+              *ngIf="orderResponse.status.includes('success')"
+              class="badge bg-success"
+              >Thành công</span
+            >
+            <span
+              *ngIf="orderResponse.status.includes('processing')"
+              class="badge bg-success"
+              >Xác nhận</span
+            >
+            <span
+              *ngIf="orderResponse.status.includes('pending')"
+              class="badge bg-info"
+              >Chờ xét duyệt</span
+            >
+            <span
+              *ngIf="orderResponse.status.includes('cancelled')"
+              class="badge bg-danger"
+              >Hủy bỏ</span
+            >
+            <span
+              *ngIf="orderResponse.status.includes('shipped')"
+              class="badge bg-warning"
+              >Đang giao</span
+            >
+
+            <label for="orderDate">Ngày Đặt Hàng</label>
+            <span id="orderDate">{{ orderResponse.order_date }}</span>
+
+            <label for="paymentStatus">Nơi giao</label>
+            <span id="paymentStatus">{{ orderResponse.address }}</span>
+          </div>
+          <div class="col-md-6">
+            <label for="customerName">Tên Khách Hàng</label>
+            <span id="customerName">{{ orderResponse.fullname }}</span>
+
+            <label for="phoneNumber">Số Điện Thoại</label>
+            <input id="phoneNumber" [value]="orderResponse.phone_number" />
+
+            <label for="address">Địa Chỉ</label>
+            <input id="address" [value]="orderResponse.address" />
+
+            <label for="note">Ghi Chú</label>
+            <span id="note">{{ orderResponse.note }}</span>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+          <button (click)="updateOrder()" class="btn btn-primary">
+            <i class="fas fa-save"></i> Cập Nhật
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

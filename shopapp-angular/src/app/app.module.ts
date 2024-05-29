@@ -30,6 +30,11 @@ import { DialogConfirmComponent } from './ultils/dialog-confirm/dialog-confirm.c
 import { AddProductComponent } from './admin/components/add-product/add-product.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { StaffManagermentComponent } from './admin/components/staff-managerment/staff-managerment.component';
+import { AddUserComponent } from './admin/components/add-user/add-user.component';
+import { PostCounterComponent } from './admin/components/post-counter/post-counter.component';
+import { OrderManagermentComponent } from './admin/components/order-managerment/order-managerment.component';
+import { EditOrderComponent } from './admin/components/edit-order/edit-order.component';
+import { BlogComponent } from './user/components/blog/blog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +56,11 @@ import { StaffManagermentComponent } from './admin/components/staff-managerment/
     DialogConfirmComponent,
     AddProductComponent,
     StaffManagermentComponent,
+    AddUserComponent,
+    PostCounterComponent,
+    OrderManagermentComponent,
+    EditOrderComponent,
+    BlogComponent,
   ],
   imports: [
     BrowserModule,

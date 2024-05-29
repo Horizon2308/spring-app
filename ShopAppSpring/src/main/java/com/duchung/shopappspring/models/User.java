@@ -30,6 +30,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "phone_number", nullable = false, length = 10, unique = true)
     private String phoneNumber;
 
+    @Column(name = "email", length = 100)
+    private String email;
+
     @Column(length = 100)
     private String password;
 
@@ -40,6 +43,11 @@ public class User extends BaseEntity implements UserDetails {
     private Date dateOfBirth;
 
     private String avatar;
+
+    private Integer sex;
+
+    @Column(name = "cic", length = 15)
+    private String cic;
 
     private int facebookAccountId;
 

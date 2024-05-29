@@ -3,7 +3,7 @@ import { OrderDetail } from "./order.detail";
 export interface Order {
   id: number;
   user_id: number;
-  fullname: string;
+  full_name: string;
   email: string;
   phone_number: string;
   address: string;
@@ -16,6 +16,7 @@ export interface Order {
   shipping_date: Date;
   tracking_number: string;
   payment_method: string;
-  active: boolean;
+  active: number;
+  listOfProductName: string;
   order_details: OrderDetail[];
 }
