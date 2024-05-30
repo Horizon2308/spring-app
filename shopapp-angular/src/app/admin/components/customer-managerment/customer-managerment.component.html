@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Danh sách đơn hàng | Quản trị Admin</title>
+    <title>Danh sách khách hàng | Quản trị Admin</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -64,9 +64,7 @@
           alt="User Image"
         />
         <div>
-          <p class="app-sidebar__user-name">
-            <b>{{ user }}</b>
-          </p>
+          <p class="app-sidebar__user-name"><b>Võ Trường</b></p>
           <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
         </div>
       </div>
@@ -91,7 +89,7 @@
           >
         </li>
         <li>
-          <a class="app-menu__item" routerLink="/admin/customers"
+          <a class="app-menu__item active" routerLink="/admin/customers"
             ><i class="app-menu__icon bx bx-user-voice"></i
             ><span class="app-menu__label">Quản lý khách hàng</span></a
           >
@@ -103,7 +101,7 @@
           >
         </li>
         <li>
-          <a class="app-menu__item active" routerLink="/admin/orders"
+          <a class="app-menu__item" routerLink="/admin/orders-manager"
             ><i class="app-menu__icon bx bx-task"></i
             ><span class="app-menu__label">Quản lý đơn hàng</span></a
           >
@@ -144,16 +142,25 @@
       <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
           <li class="breadcrumb-item active">
-            <a href="#"><b>Danh sách đơn hàng</b></a>
+            <a href="#"><b>Danh sách khách hàng</b></a>
           </li>
         </ul>
         <div id="clock"></div>
       </div>
+
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-body">
               <div class="row element-button">
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-add btn-sm"
+                    href="form-add-khach-hang.html"
+                    title="Thêm"
+                    ><i class="fas fa-plus"></i> Tạo mới khách hàng</a
+                  >
+                </div>
                 <div class="col-sm-2">
                   <a
                     class="btn btn-delete btn-sm nhap-tu-file"
@@ -206,58 +213,44 @@
                   </a>
                 </div>
               </div>
-              <table class="table table-hover table-bordered" id="sampleTable">
+              <table
+                class="table table-hover table-bordered js-copytextarea"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                id="sampleTable"
+              >
                 <thead>
                   <tr>
                     <th width="10"><input type="checkbox" id="all" /></th>
-                    <th>ID đơn hàng</th>
-                    <th>Khách hàng</th>
-                    <th>Đơn hàng</th>
-                    <th>Địa chỉ giao hàng</th>
-                    <th>Tổng tiền</th>
-                    <th>Tình trạng</th>
-                    <th>Tính năng</th>
+                    <th>Mã khách hàng</th>
+                    <th width="150">Họ và tên</th>
+                    <th width="300">Địa chỉ</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
+                    <th>SĐT</th>
+                    <th>Trạng thái</th>
+                    <th width="100">Tính năng</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let order of orders">
+                  <tr>
                     <td width="10">
                       <input type="checkbox" name="check1" value="1" />
                     </td>
-                    <td>{{ order.id }}</td>
-                    <td>{{ order.full_name }}</td>
-                    <td>{{ order.listOfProductName }}</td>
-                    <td>{{ order.shipping_address }}</td>
-                    <td>{{ order.total_money }}</td>
-                    <!-- public static final String PROCESSING = "processing";
-                    public static final String PENDING = "pending";
-                    public static final String SHIPPED = "shipped";
-                    public static final String DELIVERED = "delivered";
-                    public static final String CANCELLED = "cancelled"; -->
-                    <td *ngIf="order.status.includes('delivered')">
-                      <span class="badge bg-success">Đã giao</span>
-                    </td>
-                    <td *ngIf="order.status.includes('success')">
-                      <span class="badge bg-success">Hoàn thành</span>
-                    </td>
-                    <td *ngIf="order.status.includes('processing')">
-                      <span class="badge bg-success">Xác nhận</span>
-                    </td>
-                    <td *ngIf="order.status.includes('pending')">
-                      <span class="badge bg-info">Chờ xét duyệt</span>
-                    </td>
-                    <td *ngIf="order.status.includes('cancelled')">
-                      <span class="badge bg-danger">Hủy bỏ</span>
-                    </td>
-                    <td *ngIf="order.status.includes('shipped')">
-                      <span class="badge bg-warning">Đang giao</span>
-                    </td>
-                    <td>
+                    <td>#CD12837</td>
+                    <td>Hồ Thị Thanh Ngân</td>
+                    <td>Đại Cương-Kim Bảng-Hà Nam</td>
+                    <td>12/02/1999</td>
+                    <td>Nữ</td>
+                    <td>0926737168</td>
+                    <td>Kích hoạt</td>
+                    <td class="table-td-center">
                       <button
                         class="btn btn-primary btn-sm trash"
                         type="button"
                         title="Xóa"
-                        (click)="deleteProduct(order.id)"
+                        onclick="myFunction(this)"
                       >
                         <i class="fas fa-trash-alt"></i>
                       </button>
@@ -265,9 +258,11 @@
                         class="btn btn-primary btn-sm edit"
                         type="button"
                         title="Sửa"
-                        (click)="editButtonClick(order.id)"
+                        id="show-emp"
+                        data-toggle="modal"
+                        data-target="#ModalUP"
                       >
-                        <i class="fa fa-edit"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
                     </td>
                   </tr>
@@ -278,38 +273,99 @@
         </div>
       </div>
     </main>
-    <div class="d-flex justify-content-center">
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li class="page-item" *ngIf="currentPage > 0">
-            <a class="page-link" (click)="onPageChange(0)">First</a>
-          </li>
-          <li class="page-item" *ngIf="currentPage > 0">
-            <a class="page-link" (click)="onPageChange(currentPage - 1)">
-              <i class="fa fa-chevron-left"></i>
-            </a>
-          </li>
-          <ng-container *ngFor="let page of visiblePages">
-            <li
-              class="page-item"
-              [ngClass]="{ active: page === currentPage + 1 }"
+
+    <!--
+  MODAL
+-->
+    <div
+      class="modal fade"
+      id="ModalUP"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-12">
+                <span class="thong-tin-thanh-toan">
+                  <h5>Chỉnh sửa thông tin khách hàng cơ bản</h5>
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label class="control-label">Mã khách hàng</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  required
+                  value="#CD2187"
+                  disabled
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label class="control-label">Họ và tên</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  required
+                  value="Võ Trường"
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label class="control-label">Số điện thoại</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  required
+                  value="09267312388"
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label class="control-label">Địa chỉ email</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  required
+                  value="truong.vd2000@gmail.com"
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label class="control-label">Ngày sinh</label>
+                <input class="form-control" type="date" value="15/03/2000" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleSelect1" class="control-label"
+                  >Địa chỉ</label
+                >
+                <select class="form-control" id="exampleSelect1">
+                  <option>Hà nam</option>
+                  <option>Hà nội</option>
+                </select>
+              </div>
+            </div>
+            <BR />
+            <a href="#" style="float: right; font-weight: 600; color: #ea0000"
+              >Chỉnh sửa nâng cao</a
             >
-              <a class="page-link" (click)="onPageChange(page - 1)">{{
-                page
-              }}</a>
-            </li>
-          </ng-container>
-          <li class="page-item" *ngIf="currentPage < totalPages - 1">
-            <a class="page-link" (click)="onPageChange(currentPage + 1)">
-              <i class="fa fa-chevron-right"></i>
-            </a>
-          </li>
-          <li class="page-item" *ngIf="currentPage < totalPages - 1">
-            <a class="page-link" (click)="onPageChange(totalPages - 1)">Last</a>
-          </li>
-        </ul>
-      </nav>
+            <BR />
+            <BR />
+            <button class="btn btn-save" type="button">Lưu lại</button>
+            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+            <BR />
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
     </div>
+    <!--
+  MODAL
+-->
+
     <!-- Essential javascripts for application to work-->
     <script src="/assets/js/jquery-3.2.1.min.js"></script>
     <script src="/assets/js/popper.min.js"></script>
@@ -343,7 +399,7 @@
           swal({
             title: "Cảnh báo",
 
-            text: "Bạn có chắc chắn là muốn xóa đơn hàng này?",
+            text: "Bạn có chắc chắn là muốn xóa nhân viên này?",
             buttons: ["Hủy bỏ", "Đồng ý"],
           }).then((willDelete) => {
             if (willDelete) {

@@ -227,6 +227,41 @@
             <span id="note">{{ orderResponse.note }}</span>
           </div>
         </div>
+        <div class="col-md-6">
+          <h3 class="product-order">Sản phẩm đã đặt hàng</h3>
+          <table class="text-start">
+            <thead>
+              <tr>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Tổng giá</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of orderResponse.order_details">
+                <td>
+                  <div class="product-info">
+                    <img
+                      [src]="item.product.thumbnail"
+                      alt="Product Image"
+                      class="product-image"
+                    />
+                    <span class="product-name">{{ item.product.name }}</span>
+                  </div>
+                </td>
+                <td>{{ item.number_of_products }}</td>
+                <td>{{ item.price | number : "1.2-2" }}</td>
+                <td>{{ item.total_money | number : "1.2-2" }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-start mt-3">
+            <h4 class="header-text text-end">
+              Tổng giá: {{ orderResponse.total_money | number : "1.2-2" }}
+            </h4>
+          </div>
+        </div>
         <div class="d-flex justify-content-center mt-4">
           <button (click)="updateOrder()" class="btn btn-primary">
             <i class="fas fa-save"></i> Cập Nhật

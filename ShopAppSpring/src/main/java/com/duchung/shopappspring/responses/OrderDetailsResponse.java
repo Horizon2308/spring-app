@@ -1,5 +1,6 @@
 package com.duchung.shopappspring.responses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +20,10 @@ public class OrderDetailsResponse extends BaseResponse {
 
     private double price;
 
+    @JsonProperty("number_of_products")
     private int numberOfProducts;
 
+    @JsonProperty("total_money")
     private double totalMoney;
 
     private String color;

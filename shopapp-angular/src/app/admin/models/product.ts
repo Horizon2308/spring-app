@@ -11,6 +11,7 @@ export interface Product {
   thumbnail: string;
   price: number;
   quantity: number;
+  counter_quantity: number;
   is_active: number;
   product_status: number;
   category: Category;

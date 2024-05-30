@@ -35,6 +35,9 @@ import { PostCounterComponent } from './admin/components/post-counter/post-count
 import { OrderManagermentComponent } from './admin/components/order-managerment/order-managerment.component';
 import { EditOrderComponent } from './admin/components/edit-order/edit-order.component';
 import { BlogComponent } from './user/components/blog/blog.component';
+import { CustomerManagermentComponent } from './admin/components/customer-managerment/customer-managerment.component';
+import { IncomeManagermentComponent } from './admin/components/income-managerment/income-managerment.component';
+import { CalendarComponent } from './admin/components/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +64,9 @@ import { BlogComponent } from './user/components/blog/blog.component';
     OrderManagermentComponent,
     EditOrderComponent,
     BlogComponent,
+    CustomerManagermentComponent,
+    IncomeManagermentComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,

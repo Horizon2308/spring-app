@@ -21,4 +21,5 @@ public interface IProductService {
     List<Product> findProductsByIds(List<Long> ids);
     int countProducts();
     int countProductsSoldOut();
+    List<ProductResponse> searchProducts(String keyword);
 }

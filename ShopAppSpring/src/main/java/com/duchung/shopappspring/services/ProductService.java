@@ -115,6 +115,12 @@ public class ProductService implements IProductService {
         return productRepository.countAllByQuantity(0L);
     }
 
+    @Override
+    public List<ProductResponse> searchProducts(String keyword) {
+        return productRepository.searchProductsForCounter(keyword).stream()
+                .map(this::convertToProductResponse).toList();
+    }
+
     private Product convertToProduct(ProductDTO productDTO, Category category, Provider provider) {
         return Product.builder()
                 .name(productDTO.getName())

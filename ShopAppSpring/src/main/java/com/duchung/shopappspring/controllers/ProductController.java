@@ -70,6 +70,14 @@ public class ProductController {
                 "Get all products"));
     }
 
+    @GetMapping("search-products")
+    public ResponseEntity<?> searchProducts(@RequestParam(defaultValue = "", value = "keyword") String keyword) {
+        if (keyword.isEmpty()) {
+            return ResponseEntity.ok(new SuccessResponse<>("Nothing"));
+        }
+        return ResponseEntity.ok(new SuccessResponse<>(productService.searchProducts(keyword)));
+    }
+
     @GetMapping("with-category")
     public ResponseEntity<BaseResponse<ProductListResponse>> getAllProductsWithCategory(
             @RequestParam(defaultValue = "0", value = "category_id") Long categoryId,

@@ -25,6 +25,13 @@ export class ProductService {
     return this.http.get<any>(this.urlProducts, { params });
   }
 
+  searchProducts(keyword: string): Observable<any> {
+    const params = new HttpParams().set('keyword', keyword);
+    return this.http.get<any>(`${this.urlProducts}/search-products`, {
+      params,
+    });
+  }
+
   deleteProduct(id: number): Observable<any> {
     //const params = new HttpParams().set('id', productId);
     return this.http.delete(`${this.urlProducts}/${id}`);

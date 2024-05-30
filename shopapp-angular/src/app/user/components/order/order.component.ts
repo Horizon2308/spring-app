@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBodyComponent } from 'src/app/ultils/dialog-body/dialog-body.component';
 import { DialogConfirmComponent } from 'src/app/ultils/dialog-confirm/dialog-confirm.component';
+import { PaymentService } from '../../services/payment.service';
 
 @Injectable({
   providedIn: 'root',
@@ -67,6 +68,7 @@ export class OrderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private tokenService: TokenService,
     private orderService: OrderService,
+    private paymentService: PaymentService,
     private ghnService: GHNService,
     private dialog: MatDialog,
     private router: Router
@@ -312,34 +314,82 @@ export class OrderComponent implements OnInit {
         quantity: cartItem.quantity,
       }));
       this.orderData.total_money = this.totalAmount;
+      debugger;
       // Dữ liệu hợp lệ
-      this.orderService.placeOrder(this.orderData).subscribe({
-        next: (response: any) => {
-          debugger;
-          const dialogConfirm = this.dialog.open(DialogConfirmComponent, {
-            width: '250px',
-            data: {
-              title: 'Đặt hàng',
-              message: 'Đặt hàng thành công',
-            },
-          });
-          dialogConfirm.afterClosed().subscribe((result) => {
-            if (result) {
-              this.cartService.clearCartItems();
-              let orderId = response.data.id;
-              this.router.navigate(['/orders/'], orderId);
-            }
-          });
-        },
-        complete: () => {
-          debugger;
-          this.calculateTotal();
-        },
-        error: (error: any) => {
-          debugger;
-          alert(`Lỗi khi đặt hàng: ${error}`);
-        },
-      });
+      if (this.orderData.payment_method === 'onl') {
+        debugger
+        this.paymentService.vnPay(this.orderData.total_money).subscribe({
+          next: (response: any) => {
+            debugger;
+            let nextUrl = response.data.paymentUrl;
+            window.location.href = nextUrl;
+
+            this.orderService.placeOrder(this.orderData).subscribe({
+              next: (response: any) => {
+                debugger;
+                const dialogConfirm = this.dialog.open(DialogConfirmComponent, {
+                  width: '250px',
+                  data: {
+                    title: 'Đặt hàng',
+                    message: 'Đặt hàng thành công',
+                  },
+                });
+                dialogConfirm.afterClosed().subscribe((result) => {
+                  if (result) {
+                    this.cartService.clearCartItems();
+                    let orderId = response.data.id;
+                    //this.router.navigate(['/orders/'], orderId);
+                    location.reload();
+                  }
+                });
+              },
+              complete: () => {
+                debugger;
+                this.calculateTotal();
+              },
+              error: (error: any) => {
+                debugger;
+                alert(`Lỗi khi đặt hàng: ${error}`);
+              },
+            });
+          },
+          complete: () => {
+            debugger;
+          },
+          error: (error: any) => {
+            console.error('Error fetching categories:', error);
+          },
+        });
+      } else {
+        this.orderService.placeOrder(this.orderData).subscribe({
+          next: (response: any) => {
+            debugger;
+            const dialogConfirm = this.dialog.open(DialogConfirmComponent, {
+              width: '250px',
+              data: {
+                title: 'Đặt hàng',
+                message: 'Đặt hàng thành công',
+              },
+            });
+            dialogConfirm.afterClosed().subscribe((result) => {
+              if (result) {
+                this.cartService.clearCartItems();
+                let orderId = response.data.id;
+                //this.router.navigate(['/orders/'], orderId);
+                location.reload();
+              }
+            });
+          },
+          complete: () => {
+            debugger;
+            this.calculateTotal();
+          },
+          error: (error: any) => {
+            debugger;
+            alert(`Lỗi khi đặt hàng: ${error}`);
+          },
+        });
+      }
     } else {
       // Hiển thị thông báo lỗi hoặc xử lý khác
       alert('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.');

@@ -84,6 +84,7 @@ public class OrderService implements IOrderService {
             orderDetail.setNumberOfProducts(Math.toIntExact(quantity));
             // Các trường khác của OrderDetail nếu cần
             orderDetail.setPrice(product.getPrice());
+            orderDetail.setTotalMoney(orderDetail.getPrice() * orderDetail.getNumberOfProducts());
 
             // Thêm OrderDetail vào danh sách
             orderDetails.add(orderDetail);

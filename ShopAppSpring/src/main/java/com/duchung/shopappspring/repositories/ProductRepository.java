@@ -23,6 +23,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("keyword") String keyword,
             Pageable pageable);
 
+    @Query("SELECT p FROM Product p WHERE " +
+            "(:keyword IS NULL OR :keyword = '' OR p.name LIKE %:keyword% OR p.description LIKE %:keyword%)" +
+            " AND p.active = 1")
+    List<Product> searchProductsForCounter(@Param("keyword") String keyword);
+
 
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.productImages WHERE p.id = :productId")
     Optional<Product> getDetailsProduct(@Param("productId") Long productId);

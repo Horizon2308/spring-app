@@ -2,6 +2,7 @@ package com.duchung.shopappspring.models;
 
 import com.duchung.shopappspring.domains.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,8 +30,10 @@ public class OrderDetail extends BaseEntity {
 
     private double price;
 
+    @JsonProperty("number_of_products")
     private int numberOfProducts;
 
+    @JsonProperty("total_money")
     private double totalMoney;
 
     @Column(length = 20)

@@ -19,6 +19,9 @@ import { PostCounterComponent } from './admin/components/post-counter/post-count
 import { OrderManagermentComponent } from './admin/components/order-managerment/order-managerment.component';
 import { EditOrderComponent } from './admin/components/edit-order/edit-order.component';
 import { BlogComponent } from './user/components/blog/blog.component';
+import { CustomerManagermentComponent } from './admin/components/customer-managerment/customer-managerment.component';
+import { CalendarComponent } from './admin/components/calendar/calendar.component';
+import { IncomeManagermentComponent } from './admin/components/income-managerment/income-managerment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -72,6 +75,21 @@ const routes: Routes = [
   {
     path: 'admin/orders-manager/:id',
     component: EditOrderComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'admin/customers',
+    component: CustomerManagermentComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'admin/calendar',
+    component: CalendarComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'admin/income',
+    component: IncomeManagermentComponent,
     canActivate: [AdminGuardFn],
   },
 ];
