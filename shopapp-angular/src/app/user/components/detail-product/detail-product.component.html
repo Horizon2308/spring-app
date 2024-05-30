@@ -63,7 +63,7 @@
       <div class="product-details">
         <h2>{{ product?.name }}</h2>
         <!-- <p>{{ product?.description }}</p> -->
-        <p>Giá: {{ product?.price }} vnđ</p>
+        <p>Giá: {{ product?.price | number : "1.2" }} vnđ</p>
         <p>Số lượng tồn ở kho: {{ product?.quantity }} sản phẩm</p>
         <!-- <p>Tổng tiền: ${{ getTotalPrice() | number:'1.2-2' }}</p> -->
         <div class="product-actions">

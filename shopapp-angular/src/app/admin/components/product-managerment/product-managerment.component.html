@@ -255,7 +255,7 @@
                     <td *ngIf="product.quantity > 0">
                       <span class="badge bg-success">Còn hàng</span>
                     </td>
-                    <td *ngIf="product.quantity < 0">
+                    <td *ngIf="product.quantity <= 0">
                       <span class="badge bg-danger">Hết hàng</span>
                     </td>
                     <td>{{ product.price }}</td>
@@ -390,9 +390,17 @@
               </div>
             </div>
             <BR />
-            <a href="#" style="float: right; font-weight: 600; color: #ea0000"
-              >Chỉnh sửa sản phẩm nâng cao</a
-            >
+            <div class="form-group col-md-6">
+              <label class="control-label">Mô tả</label>
+              <textarea rows="4" cols="50" class="form-control desciption"
+              required
+              [(ngModel)]="updatedProduct.description"
+              value="{{updatedProduct.description}}"
+              name="description">
+                
+              </textarea>
+
+            </div>
             <BR />
             <BR />
             <button
@@ -402,7 +410,7 @@
             >
               Lưu lại
             </button>
-            <a class="btn btn-cancel" data-dismiss="modal" href="#" #closeUpdate
+            <a class="btn btn-cancel" data-dismiss="modal" #closeUpdate href="#"
               >Hủy bỏ</a
             >
             <BR />

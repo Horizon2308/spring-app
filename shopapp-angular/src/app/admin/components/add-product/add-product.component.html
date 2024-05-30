@@ -254,7 +254,7 @@
     <main class="app-content">
       <div class="app-title">
         <ul class="app-breadcrumb breadcrumb">
-          <li class="breadcrumb-item">Danh sách sản phẩm</li>
+          <li class="breadcrumb-item" ><a routerLink="/admin/products">Danh sách sản phẩm</a></li>
           <li class="breadcrumb-item"><a href="#">Thêm sản phẩm</a></li>
         </ul>
       </div>
@@ -292,6 +292,7 @@
               <form
                 class="row"
                 enctype="multipart/form-data"
+                #addProductForm="ngForm"
                 (ngSubmit)="insertProduct()"
               >
                 <div class="form-group col-md-3">
@@ -309,9 +310,19 @@
                   <input
                     class="form-control"
                     type="number"
+                    (focus)="addProductForm.form.markAsTouched()"
                     [(ngModel)]="insertProductDTO.quantity"
                     name="quantity"
                   />
+                  <p
+                  class="text-danger"
+                  *ngIf="
+                    (insertProductDTO.quantity <= 0) &&
+                    addProductForm.form.touched
+                  "
+                  >
+                  Số lượng sản phẩm ít nhất là 1
+                  </p>
                 </div>
                 <div class="form-group col-md-3">
                   <label for="exampleSelect1" class="control-label"

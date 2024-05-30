@@ -39,11 +39,11 @@ export class RegisterComponent implements OnInit {
     private ghnService: GHNService,
     private dialog: MatDialog
   ) {
-    this.phone = '0915144606';
-    this.password = 'Hungpro2308';
-    this.retypePassword = 'Hungpro2308';
-    this.address = 'Ninh Binh';
-    this.fullName = 'Ha Duc Hung';
+    this.phone = '';
+    this.password = '';
+    this.retypePassword = '';
+    this.address = '';
+    this.fullName = '';
     this.isAccepted = false;
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);

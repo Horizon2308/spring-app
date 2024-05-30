@@ -181,9 +181,9 @@
                     </div>
                   </div>
                 </td>
-                <td>{{ item.product.price | number : "1.2-2" }}</td>
+                <td>{{ item.product.price | number : "1.2" }}</td>
                 <td>
-                  {{ item.product.price * item.quantity | number : "1.2-2" }}
+                  {{ item.product.price * item.quantity | number : "1.2" }}
                 </td>
                 <td>
                   <button class="btn btn-danger" (click)="confirmDelete(i)">

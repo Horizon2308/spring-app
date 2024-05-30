@@ -4,6 +4,7 @@ import { StatisticService } from '../../services/statistic.service';
 import { Order } from 'src/app/user/models/order';
 import { OrderStatistic } from '../../models/order.statistic';
 import { UserStatistic } from '../../models/user.statistic';
+import { environment } from 'src/app/user/environments/environment';
 
 @Component({
   selector: 'app-home-admin',
@@ -12,6 +13,7 @@ import { UserStatistic } from '../../models/user.statistic';
 })
 export class HomeAdminComponent implements OnInit {
   user: string = '';
+  avatar: string = '';
   numberOfCustomers: number = 0;
   numberOfProducts: number = 0;
   numberOfOrders: number = 0;
@@ -26,6 +28,8 @@ export class HomeAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getUserResponseFromLocalStorage()!.fullname;
+    this.avatar = this.userService.getUserResponseFromLocalStorage()!.avatar;
+    this.avatar = `${environment.apiBaseUrl}/users/avatar/${this.avatar}`
     this.countCustomer();
     this.countProducts();
     this.countOrders();

@@ -112,7 +112,22 @@ export class DetailProductComponent implements OnInit {
   addProductToCart() {
     debugger;
     this.isPressedAddToCart = true;
-    if (this.product) {
+    if (this.product!.quantity <= 0) {
+      let dialogConfirm = this.dialog.open(DialogConfirmComponent, {
+        width: '250px',
+        data: {
+          title: 'Thêm vào giỏ hàng',
+          message: 'Sản phẩm hiện tại đã hết',
+        },
+      });
+      dialogConfirm.afterClosed().subscribe((result) => {
+        if (result) {
+          dialogConfirm.close();
+          return;
+        }
+      });
+    }
+    if (this.product && this.product!.quantity > 0) {
       this.cartService.addProductIntoCartItems(this.productId, this.quantity);
       let dialogConfirm = this.dialog.open(DialogConfirmComponent, {
         width: '250px',
@@ -147,9 +162,26 @@ export class DetailProductComponent implements OnInit {
     }
   }
   buyNow(): void {
-    if (this.isPressedAddToCart == false) {
-      this.addProductToCart();
+    if(this.product!.quantity <= 0) {
+      let dialogConfirm = this.dialog.open(DialogConfirmComponent, {
+        width: '250px',
+        data: {
+          title: 'Thêm vào giỏ hàng',
+          message: 'Sản phẩm hiện tại đã hết',
+        },
+      });
+      dialogConfirm.afterClosed().subscribe((result) => {
+        if (result) {
+          dialogConfirm.close();
+          return;
+        }
+      });
     }
-    this.router.navigate(['/orders']);
+    else if (this.isPressedAddToCart == false && this.product!.quantity > 0) {
+      this.addProductToCart();
+      this.router.navigate(['/orders']);
+    }
+    
   }
 }
+

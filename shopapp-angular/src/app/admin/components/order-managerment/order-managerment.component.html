@@ -228,7 +228,7 @@
                     <td>{{ order.full_name }}</td>
                     <td>{{ order.listOfProductName }}</td>
                     <td>{{ order.shipping_address }}</td>
-                    <td>{{ order.total_money }}</td>
+                    <td>{{ order.total_money | number : "1.2" }}vnd</td>
                     <!-- public static final String PROCESSING = "processing";
                     public static final String PENDING = "pending";
                     public static final String SHIPPED = "shipped";

@@ -113,7 +113,7 @@ export class EditOrderComponent implements OnInit {
           });
           dialogConfirm.afterClosed().subscribe((result) => {
             if (result) {
-              location.reload();
+              this.router.navigate(['/admin/orders-manager']);
               // this.renderer
               //   .selectRootElement(this.closeUpdate!.nativeElement)
               //   .click();

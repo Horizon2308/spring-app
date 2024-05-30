@@ -54,6 +54,8 @@ export class HeaderComponent implements OnInit {
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
       this.router.navigate(['/login']);
+    } else if (index === 3) {
+      this.router.navigate(['/admin']);
     }
     this.isPopoverOpen = false; // Close the popover after clicking an item
   }

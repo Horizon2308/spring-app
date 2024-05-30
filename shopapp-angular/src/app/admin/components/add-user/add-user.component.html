@@ -254,7 +254,7 @@
     <main class="app-content">
       <div class="app-title">
         <ul class="app-breadcrumb breadcrumb">
-          <li class="breadcrumb-item">Danh sách nhân viên</li>
+          <li class="breadcrumb-item"><a routerLink="/admin/staffs">Danh sách nhân viên</a></li>
           <li class="breadcrumb-item"><a href="#">Thêm nhân viên</a></li>
         </ul>
       </div>
@@ -436,7 +436,7 @@
             <button class="btn btn-save" type="button" (click)="insertStaff()">
               Lưu lại
             </button>
-            <a class="btn btn-cancel" href="/doc/table-data-table.html"
+            <a class="btn btn-cancel" routerLink="/admin/staffs"
               >Hủy bỏ</a
             >
           </div>
@@ -480,7 +480,7 @@
             <button class="btn btn-save" type="button" (click)="createRole()">
               Lưu lại
             </button>
-            <a class="btn btn-cancel" data-dismiss="modal" href="#" #closeRole
+            <a class="btn btn-cancel" data-dismiss="modal"  #closeRole
               >Hủy bỏ</a
             >
             <BR />

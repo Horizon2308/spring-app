@@ -33,7 +33,7 @@
               class="nav-link"
               [ngClass]="{ active: activeNavItem === 0 }"
               (click)="setActiveNavItem(0)"
-              routerLink="/home"
+              routerLink="/"
               >Trang chủ</a
             >
           </li>
@@ -82,8 +82,11 @@
                     <a class="popover-item" (click)="handleItemClick(0)"
                       >Tài khoản của tôi</a
                     >
-                    <a class="popover-item" (click)="handleItemClick(1)"
+                    <a *ngIf="userResponse.role.id != 1" class="popover-item" (click)="handleItemClick(1)"
                       >Đơn mua</a
+                    >
+                    <a *ngIf="userResponse.role.id == 1" class="popover-item" (click)="handleItemClick(3)"
+                      >Trang quản lý</a
                     >
                     <a class="popover-item" (click)="handleItemClick(2)"
                       >Đăng xuất</a

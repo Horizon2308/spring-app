@@ -17,6 +17,7 @@ import { Category } from '../../models/category';
 import { CategoryDTO } from '../../dtos/category.dto';
 import { InsertProductDTO } from '../../dtos/insert.product.dto';
 import { ProductService } from '../../services/products.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',
@@ -24,6 +25,8 @@ import { ProductService } from '../../services/products.service';
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit {
+
+  @ViewChild('addProductForm') addProductForm!: NgForm;
   public Editor = ClassicEditor;
   public model = {
     editorData: '',
