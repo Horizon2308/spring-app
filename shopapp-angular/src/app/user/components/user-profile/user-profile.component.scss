@@ -11,14 +11,15 @@
   text-align: center;
 }
 .form-control {
-  background-color: rgb(19, 23, 42);
+  // background-color: rgb(19, 23, 42);
+  background-color: white;
   border: 1px solid rgb(29, 33, 54);
-  color: white;
+  color: black;
 }
 
 .form-control:focus {
   border-color: white;
-  background-color: rgb(19, 23, 42);
+  // background-color: rgb(19, 23, 42);
 }
 .form-label {
   color: black;

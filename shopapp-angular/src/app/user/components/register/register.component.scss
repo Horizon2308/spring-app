@@ -1,6 +1,5 @@
 .container {
     color: black;
-    height: 100vh;    
 }
 
 .register-form {
@@ -29,6 +28,7 @@
     background-color: transparent;
     border: none;
     color: black;
+    margin-bottom: -10px;
 }
 
 .form-control:focus {
@@ -54,11 +54,11 @@
 }
 
 .checkbox-text {
-    color: rgb(243, 165, 42);
+    color: red;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+  
 }
 
 /* Màu checkbox khi được chọn */
@@ -72,25 +72,26 @@
 }
 
 .register-link {
-    color: rgb(243, 165, 42);
+    color: red;
     text-decoration: none;
 }
 
 .register-button {
     background: linear-gradient(to right, rgb(225, 64, 180), rgb(126, 43, 237));
     // background: linear-gradient(to right,rgb(247,202,201), rgb(253,219,219), rgb(208,228,245), rgb(179,206,229));
-    color: black;
+    color: white;
+   
     border-radius: 30px;
     width: 100%;
     padding: 10px 0;
-    margin-top: 20px;
+ 
     border: none;
     font-size: 20px;
-    font-weight: 100;
+    font-weight: bold;
 }
 
 .divider {
-    height: 2px;
+    // height: 2px;
     background-color: lavender;
     /*      background-color: rgb(105, 244, 181)*/
     margin: 20px;

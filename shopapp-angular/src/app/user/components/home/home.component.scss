@@ -53,8 +53,10 @@
     padding: 10px 10px;
 }
 .product-item {
-    background-color: rgb(19, 23, 42);
-    border: 1px solid rgb(35, 39, 61);
+    border: 2px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    // background-color: rgb(19, 23, 42);
+    // border: 1px solid rgb(35, 39, 61);
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 20px;
@@ -64,12 +66,14 @@
 
 .product-image {
     width: 100%;
+    // width: 70%
     height: auto;
     margin-bottom: 10px;
+    // margin: 10px 10px 10px 36px;
 }
 
 .product-name {
-    color: white;
+    color: black;
     text-align: center;
     font-size: 24px;
     font-weight: 1000;
@@ -84,7 +88,7 @@
 }
 
 .product-price {
-    color: white;
+    color: black;
     text-align: center;
     font-size: 15px;
     font-weight: 500;
