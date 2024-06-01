@@ -2,13 +2,11 @@
     color: black;
     padding: 20px;
     text-align: center;
-    font-size: 50;
-    font-weight: 1000;
-    font-weight: bold;
+   
 }
-.intro-section .h1{
+.intro-section h1{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 .product-image {
@@ -103,7 +101,7 @@
     outline: none;
   }  
   .description-container {
-    width: 60%;
+    width: 100%;
     margin: 0 20px;
     padding: 20px;
     border: 1px solid #ddd;
@@ -118,4 +116,67 @@
 .description-text {
     font-size: 16px;
     line-height: 1.5;
+    text-align: justify;
+}
+
+
+
+
+
+
+.comment-section {
+    width: 90%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment-section h2 {
+    text-align: center;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comment-form input,
+.comment-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.comment-form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.comments-list {
+    margin-top: 20px;
+}
+
+.comment {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-header {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-body {
+    margin-top: 5px;
+    color: #555;
 }

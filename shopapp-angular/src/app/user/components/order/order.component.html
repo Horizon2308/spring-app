@@ -162,7 +162,7 @@
           <tbody>
             <ng-container *ngFor="let item of cartItems; let i = index">
               <tr>
-                <td>
+                <td class="product-info">
                   <div class="product-info">
                     <img
                       [src]="item.product.thumbnail"
@@ -172,7 +172,7 @@
                     <span class="product-name">{{ item.product.name }}</span>
                   </div>
                 </td>
-                <td>
+                <td class="product-quantity">
                   <div class="product-quantity">
                     <div class="border-wrapper">
                       <button (click)="decreaseQuantity(i)">-</button>
@@ -181,11 +181,11 @@
                     </div>
                   </div>
                 </td>
-                <td>{{ item.product.price | number : "1.2" }}</td>
-                <td>
+                <td class="price">{{ item.product.price | number : "1.2" }}</td>
+                <td class="price">
                   {{ item.product.price * item.quantity | number : "1.2" }}
                 </td>
-                <td>
+                <td class="btnxoa">
                   <button class="btn btn-danger" (click)="confirmDelete(i)">
                     Xóa
                   </button>

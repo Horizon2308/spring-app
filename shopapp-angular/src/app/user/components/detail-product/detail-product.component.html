@@ -90,6 +90,56 @@
     </div>
   </div>
 </div>
+<div class="comment-section">
+  <h2>Bình luận</h2>
+  <div class="comment-form">
+      <input type="text" id="name" placeholder="Tên của bạn">
+      <textarea id="comment" placeholder="Viết bình luận..."></textarea>
+      <button type="button" onclick="addComment()">Gửi bình luận</button>
+  </div>
+  <div class="comments-list">
+      <!-- Bình luận mẫu từ người khác -->
+      <div class="comment">
+          <div class="comment-header">Nguyễn Văn A</div>
+          <div class="comment-body">Sản phẩm rất tốt, tôi rất hài lòng!</div>
+      </div>
+      <div class="comment">
+          <div class="comment-header">Trần Thị B</div>
+          <div class="comment-body">Chất lượng tốt, giá cả hợp lý. Sẽ ủng hộ dài lâu.</div>
+      </div>
+      <!-- Các bình luận mới sẽ xuất hiện ở đây -->
+  </div>
+</div>
+
+<script>
+  function addComment() {
+      var name = document.getElementById('name').value;
+      var comment = document.getElementById('comment').value;
+
+      if (name && comment) {
+          var commentSection = document.querySelector('.comments-list');
+          var newComment = document.createElement('div');
+          newComment.classList.add('comment');
+
+          var commentHeader = document.createElement('div');
+          commentHeader.classList.add('comment-header');
+          commentHeader.textContent = name;
+
+          var commentBody = document.createElement('div');
+          commentBody.classList.add('comment-body');
+          commentBody.textContent = comment;
+
+          newComment.appendChild(commentHeader);
+          newComment.appendChild(commentBody);
+          commentSection.appendChild(newComment);
+
+          // Xóa nội dung trong input và textarea sau khi gửi bình luận
+          document.getElementById('name').value = '';
+          document.getElementById('comment').value = '';
+      }
+  }
+</script>
+
 <app-footer>
   <footer></footer>
 </app-footer>
