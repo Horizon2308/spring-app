@@ -3,6 +3,12 @@
     text-align: center;
     color: black;
     padding: 20px;
+    font-size: 16px;
+    
+}
+.intro-section h1{
+    font-weight: bold;
+    font-size: 30px;
 }
 
 .search-box {
@@ -70,6 +76,7 @@
     height: auto;
     margin-bottom: 10px;
     // margin: 10px 10px 10px 36px;
+    align-items: center;
 }
 
 .product-name {
