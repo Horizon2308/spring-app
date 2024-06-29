@@ -72,8 +72,8 @@
           </select>
           <button id="create-button" (click)="onAddModalOpen()">Tạo mới</button>
           <app-modal [(showModal)]="isAddModalOpen" (close)="onAddModalClose()">
-            <div class="modal-content">
-              <span class="close-button">&times;</span>
+            <!-- <div class="modal-content"> -->
+              
               <h2>Tạo mới</h2>
               <form id="create-form">
                 <label for="store-name">Tên CH:</label>
@@ -102,7 +102,7 @@
                 />
                 <button type="submit" (click)="addStore()">Tạo</button>
               </form>
-            </div>
+            <!-- </div> -->
           </app-modal>
         </div>
         <table class="stores-table">
@@ -134,14 +134,21 @@
                   Sửa
                 </button>
               </td>
-              <app-modal
+              <td>
+                <button class="delete-button" (click)="deleteStore(store.id)">
+                  Xóa
+                </button>
+              </td>
+          
+            </tr>
+            <app-modal
                 [(showModal)]="isUpdateModelOpen"
                 (close)="onUpdateModalClose()"
               >
-                <div class="modal-content">
-                  <span class="close-button">&times;</span>
+               
+                  
                   <h2>Sửa cửa hàng</h2>
-                  <form id="create-form">
+                  
                     <label for="store-name">Tên CH:</label>
                     <input
                       type="text"
@@ -170,15 +177,9 @@
                     <button type="submit" (click)="updateStore()">
                       Cập nhật
                     </button>
-                  </form>
-                </div>
+                 
+                
               </app-modal>
-              <td>
-                <button class="delete-button" (click)="deleteStore(store.id)">
-                  Xóa
-                </button>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
