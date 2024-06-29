@@ -1,5 +1,6 @@
 package com.duchung.shopappspring.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,5 +20,6 @@ public class Provider {
     private Long id;
 
     @Column(unique = true, length = 100)
+    @JsonProperty("provider_name")
     private String name;
 }

@@ -14,6 +14,7 @@ import com.duchung.shopappspring.responses.ProductResponse;
 import com.duchung.shopappspring.responses.ProductWithoutCategoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,6 +120,20 @@ public class ProductService implements IProductService {
     public List<ProductResponse> searchProducts(String keyword) {
         return productRepository.searchProductsForCounter(keyword).stream()
                 .map(this::convertToProductResponse).toList();
+    }
+
+    @Override
+    public List<ProductResponse> findTop4PopularProducts() {
+        return productRepository.findTop4Products(PageRequest.of(0,4)).stream()
+                .map(this::convertToProductResponse)
+                .toList();
+    }
+
+    @Override
+    public List<ProductResponse> getProductsIsSoldOut() {
+        return productRepository.findAllByQuantity(0L).stream()
+                .map(this::convertToProductResponse)
+                .toList();
     }
 
     private Product convertToProduct(ProductDTO productDTO, Category category, Provider provider) {

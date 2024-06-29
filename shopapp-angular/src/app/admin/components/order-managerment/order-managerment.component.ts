@@ -85,12 +85,14 @@ export class OrderManagermentComponent implements OnInit {
   getListOfProductName(): void {
     debugger;
     this.orders.forEach((order: Order) => {
+      order.listOfProductName = '';
       order.order_details.forEach((orderDetails: OrderDetail) => {
         debugger;
         order.listOfProductName += orderDetails.product.name;
         order.listOfProductName += ', ';
       });
-      order.listOfProductName.substring(0, order.listOfProductName.length - 1);
+      order.listOfProductName = order.listOfProductName
+        .substring(0, order.listOfProductName.length - 2);
     });
   }
 

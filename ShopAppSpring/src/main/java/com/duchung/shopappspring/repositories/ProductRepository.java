@@ -39,4 +39,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //@Query("SELECT p FROM Product p WHERE p.quantity = 0")
     int countAllByQuantity(Long quantity);
+
+    @Query("SELECT p FROM Product p JOIN OrderDetail od ON p.id = od.product.id " +
+            "GROUP BY p.id ORDER BY COUNT(od.id) DESC")
+    List<Product> findTop4Products(Pageable pageable);
+    List<Product> findAllByQuantity(Long quantity);
 }

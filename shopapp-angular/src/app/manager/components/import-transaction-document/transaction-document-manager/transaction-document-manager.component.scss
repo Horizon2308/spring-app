@@ -1,0 +1,221 @@
+/* style_inbound.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.logo {
+  padding: 20px;
+  text-align: center;
+}
+
+.logo h1 {
+  margin: 0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+nav ul li {
+  padding: 10px 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar nav ul li a.active,
+.sidebar nav ul li a:hover {
+  background-color: #555;
+  color: #fff; /* Màu chữ khi mục đang được chọn */
+  padding: 10px 20px; /* Điều chỉnh padding để tạo khoảng cách giữa các mục */
+  border-top-left-radius: 10px; /* Làm tròn góc */
+  border-bottom-left-radius: 10px;
+  transition: background-color 0.3s, color 0.3s; /* Thêm hiệu ứng chuyển đổi */
+  display: block; /* Hiển thị như là block element */
+  width: 90.5%;
+}
+
+.logout {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.logout a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+}
+
+header .user-info {
+  display: flex;
+  align-items: center;
+}
+
+header .user-info span {
+  margin-right: 10px;
+}
+
+header img {
+  border-radius: 50%;
+}
+
+.content {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filters select,
+.filters input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filters button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+  background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+button[type="create"] {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+button[type="create"] a {
+  color: white;
+  text-decoration: none;
+}
+
+button[type="create"]:hover {
+  background-color: #45a049;
+}
+
+button.detail-button {
+  color: #ffffff; /* Màu chữ */
+  background-color: #ffd700; /* Màu nền vàng */
+  border: 1px solid #ffd700; /* Viền màu vàng */
+  padding: 8px 16px; /* Khoảng cách giữa chữ và viền */
+  cursor: pointer; /* Con trỏ chuột biến thành pointer khi di chuột qua */
+  transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi màu khi hover */
+  border-radius: 5px;
+}
+
+button[type="detail"] a {
+  color: white;
+  text-decoration: none;
+}
+
+button[type="delete"] a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Định dạng nút "Chi tiết" khi di chuột qua */
+button.detail-button:hover {
+  background-color: #ffa500; /* Màu vàng khi hover */
+  border-color: #ffa500; /* Viền màu vàng khi hover */
+  border-radius: 5px;
+}
+
+/* Định dạng nút "Xóa" */
+button.delete-button {
+  color: #ffffff; /* Màu chữ */
+  background-color: #ff0000; /* Màu nền đỏ */
+  border: 1px solid #ff0000; /* Viền màu đỏ */
+  padding: 8px 16px; /* Khoảng cách giữa chữ và viền */
+  cursor: pointer; /* Con trỏ chuột biến thành pointer khi di chuột qua */
+  transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi màu khi hover */
+  border-radius: 5px;
+}
+
+/* Định dạng nút "Xóa" khi di chuột qua */
+button.delete-button:hover {
+  background-color: #dc143c; /* Màu đỏ khi hover */
+  border-color: #dc143c; /* Viền màu đỏ khi hover */
+  border-radius: 5px;
+}

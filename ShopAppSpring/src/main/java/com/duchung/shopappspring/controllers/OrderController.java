@@ -136,4 +136,22 @@ public class OrderController {
     public ResponseEntity<?> getLatestOrders() {
         return ResponseEntity.ok(new SuccessResponse<>(orderService.getLatestOrder()));
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/count/get-total-money")
+    public ResponseEntity<?> getTotalMoney() {
+        return ResponseEntity.ok(new SuccessResponse<>(orderService.getTotalMoney()));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/count/cancelled-order")
+    public ResponseEntity<?> countCancelledOrder() {
+        return ResponseEntity.ok(new SuccessResponse<>(orderService.countCancelledOrder()));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/statistic/get-successful-orders")
+    public ResponseEntity<?> getSuccessfulOrders() {
+        return ResponseEntity.ok(new SuccessResponse<>(orderService.getSuccessfulOrder()));
+    }
 }

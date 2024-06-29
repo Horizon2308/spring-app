@@ -38,6 +38,16 @@ import { BlogComponent } from './user/components/blog/blog.component';
 import { CustomerManagermentComponent } from './admin/components/customer-managerment/customer-managerment.component';
 import { IncomeManagermentComponent } from './admin/components/income-managerment/income-managerment.component';
 import { CalendarComponent } from './admin/components/calendar/calendar.component';
+import { RawProductsManagerComponent } from './manager/components/raw-products-manager/raw-products-manager.component';
+import { TransactionDocumentManagerComponent } from './manager/components/import-transaction-document/transaction-document-manager/transaction-document-manager.component';
+import { TransactionDocumentDetailComponent } from './manager/components/import-transaction-document/transaction-document-detail/transaction-document-detail.component';
+import { AddTransactionDocumentComponent } from './manager/components/import-transaction-document/add-transaction-document/add-transaction-document.component';
+import { ProviderManagerComponent } from './manager/components/provider-manager/provider-manager.component';
+import { ModalComponent } from './ultils/modal/modal.component';
+import { StoreManagerComponent } from './manager/components/store-manager/store-manager.component';
+import { ExportTransactionDocumentComponent } from './manager/components/export/export-transaction-document/export-transaction-document.component';
+import { AddExportTransactionDocumentComponent } from './manager/components/export/add-export-transaction-document/add-export-transaction-document.component';
+import { ExportTransactionDocumentDetailsComponent } from './manager/components/export/export-transaction-document-details/export-transaction-document-details.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +77,16 @@ import { CalendarComponent } from './admin/components/calendar/calendar.componen
     CustomerManagermentComponent,
     IncomeManagermentComponent,
     CalendarComponent,
+    RawProductsManagerComponent,
+    TransactionDocumentManagerComponent,
+    TransactionDocumentDetailComponent,
+    AddTransactionDocumentComponent,
+    ProviderManagerComponent,
+    ModalComponent,
+    StoreManagerComponent,
+    ExportTransactionDocumentComponent,
+    AddExportTransactionDocumentComponent,
+    ExportTransactionDocumentDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -182,6 +182,16 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/count/staffs")
+    public ResponseEntity<?> countStaffs() {
+        try {
+            return ResponseEntity.ok(new SuccessResponse<>(userService.countStaffs()));
+        } catch (DataNotFoundException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse<>(e.getMessage()));
+        }
+    }
+
     @GetMapping("/count/get-latest-customers")
     public ResponseEntity<?> getLatestCustomer() {
         return ResponseEntity.ok(new SuccessResponse<>(userService.getLatestCustomers()));

@@ -22,4 +22,6 @@ public interface IProductService {
     int countProducts();
     int countProductsSoldOut();
     List<ProductResponse> searchProducts(String keyword);
+    List<ProductResponse> findTop4PopularProducts();
+    List<ProductResponse> getProductsIsSoldOut();
 }

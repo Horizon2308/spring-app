@@ -23,4 +23,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> searchOrder(
             @Param("keyword") String keyword,
             Pageable pageable);
+
+    @Query("SELECT SUM(COALESCE(o.totalMoney, 0)) FROM Order o WHERE o.status = 'success'")
+    Double findTotalMoneySum();
+    int countByStatus(String status);
+    List<Order> findByStatus(String status);
 }

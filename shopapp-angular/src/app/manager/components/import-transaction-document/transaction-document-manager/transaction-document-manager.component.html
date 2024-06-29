@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhập hàng hóa</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-flower2"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 16a4 4 0 0 0 4-4 4 4 0 0 0 0-8 4 4 0 0 0-8 0 4 4 0 1 0 0 8 4 4 0 0 0 4 4m3-12q0 .11-.03.247c-.544.241-1.091.638-1.598 1.084A3 3 0 0 0 8 5c-.494 0-.96.12-1.372.331-.507-.446-1.054-.843-1.597-1.084A1 1 0 0 1 5 4a3 3 0 0 1 6 0m-.812 6.052A3 3 0 0 0 11 8a3 3 0 0 0-.812-2.052c.215-.18.432-.346.647-.487C11.34 5.131 11.732 5 12 5a3 3 0 1 1 0 6c-.268 0-.66-.13-1.165-.461a7 7 0 0 1-.647-.487m-3.56.617a3 3 0 0 0 2.744 0c.507.446 1.054.842 1.598 1.084q.03.137.03.247a3 3 0 1 1-6 0q0-.11.03-.247c.544-.242 1.091-.638 1.598-1.084m-.816-4.721A3 3 0 0 0 5 8c0 .794.308 1.516.812 2.052a7 7 0 0 1-.647.487C4.66 10.869 4.268 11 4 11a3 3 0 0 1 0-6c.268 0 .66.13 1.165.461.215.141.432.306.647.487M8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
+          />
+        </svg>
+        <h1>Flower SupperStore</h1>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a routerLink="/manager/raw-products-manager">Danh sách hàng hóa</a>
+          </li>
+          <li>
+            <a class="active" routerLink="/manager/transaction-document-manager"
+              >Nhập hàng hóa</a
+            >
+          </li>
+          <li>
+            <a routerLink="/manager/export-transaction-document"
+              >Xuất hàng hóa</a
+            >
+          </li>
+          <li><a routerLink="/manager/provider-manager">Danh sách NCC</a></li>
+          <li><a routerLink="/manager/store-manager">Danh sách Cửa hàng</a></li>
+        </ul>
+      </nav>
+      <div class="logout">
+        <a href="/log-in/log-in.html">Log out</a>
+      </div>
+    </div>
+    <div class="main-content">
+      <header>
+        <input
+          type="text"
+          placeholder="Tìm kiếm..."
+          [(ngModel)]="keyword"
+          (change)="searchProducts()"
+        />
+        <div class="user-info">
+          <span>Username</span>
+          <img src="https://via.placeholder.com/40" alt="User" />
+        </div>
+      </header>
+      <div class="content">
+        <h2>Nhập hàng hóa</h2>
+        <div class="filters">
+          <select [(ngModel)]="sortOption">
+            <option [value]="1">Thời gian nhập</option>
+            <option [value]="2">Mã sản phẩm</option>
+            <option [value]="3">Số lượng</option>
+          </select>
+
+          <button type="create">
+            <a routerLink="/manager/transaction-document/import"
+              >Tạo phiếu nhập</a
+            >
+          </button>
+        </div>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Mã phiếu nhập</th>
+                <th>Tên phiếu nhập</th>
+                <th>Tổng sản phẩm</th>
+                <th>Người nhập</th>
+                <th>Thời gian nhập</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let transactionDocument of transactionDocuments;
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ transactionDocument.id }}</td>
+                <td>{{ transactionDocument.name }}</td>
+                <td>{{ transactionDocument.total_products }}</td>
+                <td>{{ transactionDocument.username }}</td>
+                <td>{{ transactionDocument.created_at }}</td>
+                <td>
+                  <button
+                    type="detail"
+                    class="detail-button"
+                    (click)="
+                      transactionDocumentDetailsClick(transactionDocument.id)
+                    "
+                  >
+                    Chi tiết
+                  </button>
+                </td>
+                <td>
+                  <button type="delete" class="delete-button">Xóa</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item" *ngIf="currentPage > 0">
+            <a class="page-link" (click)="onPageChange(0)">First</a>
+          </li>
+          <li class="page-item" *ngIf="currentPage > 0">
+            <a class="page-link" (click)="onPageChange(currentPage - 1)">
+              <i class="fa fa-chevron-left"></i>
+            </a>
+          </li>
+          <ng-container *ngFor="let page of visiblePages">
+            <li
+              class="page-item"
+              [ngClass]="{ active: page === currentPage + 1 }"
+            >
+              <a class="page-link" (click)="onPageChange(page - 1)">{{
+                page
+              }}</a>
+            </li>
+          </ng-container>
+          <li class="page-item" *ngIf="currentPage < totalPages - 1">
+            <a class="page-link" (click)="onPageChange(currentPage + 1)">
+              <i class="fa fa-chevron-right"></i>
+            </a>
+          </li>
+          <li class="page-item" *ngIf="currentPage < totalPages - 1">
+            <a class="page-link" (click)="onPageChange(totalPages - 1)">Last</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html>

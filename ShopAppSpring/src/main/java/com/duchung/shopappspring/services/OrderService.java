@@ -162,6 +162,24 @@ public class OrderService implements IOrderService {
         return orderRepository.findTop4ByOrderByIdDesc().stream().map(this::convertToOrderStatistic).toList();
     }
 
+    @Override
+    @Transactional
+    public double getTotalMoney() {
+        return orderRepository.findTotalMoneySum();
+    }
+
+    @Override
+    public int countCancelledOrder() {
+        return orderRepository.countByStatus("cancelled");
+    }
+
+    @Override
+    public List<OrderResponse> getSuccessfulOrder() {
+        return orderRepository.findByStatus("success").stream()
+                .map(this::convertToOrderResponse)
+                .toList();
+    }
+
     private OrderStatisticResponse convertToOrderStatistic(Order order) {
         return OrderStatisticResponse.builder()
                 .id(order.getId())

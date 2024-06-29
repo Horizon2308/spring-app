@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh Sách Nhà Cung Cấp</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-flower2"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 16a4 4 0 0 0 4-4 4 4 0 0 0 0-8 4 4 0 0 0-8 0 4 4 0 1 0 0 8 4 4 0 0 0 4 4m3-12q0 .11-.03.247c-.544.241-1.091.638-1.598 1.084A3 3 0 0 0 8 5c-.494 0-.96.12-1.372.331-.507-.446-1.054-.843-1.597-1.084A1 1 0 0 1 5 4a3 3 0 0 1 6 0m-.812 6.052A3 3 0 0 0 11 8a3 3 0 0 0-.812-2.052c.215-.18.432-.346.647-.487C11.34 5.131 11.732 5 12 5a3 3 0 1 1 0 6c-.268 0-.66-.13-1.165-.461a7 7 0 0 1-.647-.487m-3.56.617a3 3 0 0 0 2.744 0c.507.446 1.054.842 1.598 1.084q.03.137.03.247a3 3 0 1 1-6 0q0-.11.03-.247c.544-.242 1.091-.638 1.598-1.084m-.816-4.721A3 3 0 0 0 5 8c0 .794.308 1.516.812 2.052a7 7 0 0 1-.647.487C4.66 10.869 4.268 11 4 11a3 3 0 0 1 0-6c.268 0 .66.13 1.165.461.215.141.432.306.647.487M8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
+          />
+        </svg>
+        <h1>Flower SupperStore</h1>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a routerLink="/manager/raw-products-manager">Danh sách hàng hóa</a>
+          </li>
+          <li>
+            <a routerLink="/manager/transaction-document-manager"
+              >Nhập hàng hóa</a
+            >
+          </li>
+          <li>
+            <a routerLink="/manager/export-transaction-document"
+              >Xuất hàng hóa</a
+            >
+          </li>
+          <li>
+            <a class="active" routerLink="/manager/provider-manager"
+              >Danh sách NCC</a
+            >
+          </li>
+          <li><a routerLink="/manager/store-manager">Danh sách Cửa hàng</a></li>
+        </ul>
+      </nav>
+      <div class="logout">
+        <a href="/log-in/log-in.html">Log out</a>
+      </div>
+    </div>
+    <div class="main-content">
+      <header>
+        <input type="text" placeholder="Tìm kiếm..." />
+        <div class="user-info">
+          <span>Username</span>
+          <img src="https://via.placeholder.com/40" alt="User" />
+        </div>
+      </header>
+      <div class="content">
+        <h2>Danh sách Nhà cung cấp</h2>
+        <div class="filters">
+          <select>
+            <option>Thời gian</option>
+            <option>Tên nhà cung cấp</option>
+          </select>
+          <button id="create-button" (click)="openModal()">Tạo mới</button>
+          <app-modal [(showModal)]="isModalOpen" (close)="onModalClose()">
+            <div class="modal-content">
+              <h2>Tạo mới</h2>
+              <form id="create-form">
+                <label for="supplier-id">Mã NCC:</label>
+                <input
+                  type="text"
+                  id="supplier-id"
+                  name="supplier-id"
+                  required
+                />
+                <label for="supplier-name">Tên NCC:</label>
+                <input
+                  type="text"
+                  id="supplier-name"
+                  name="supplier-name"
+                  required
+                />
+                <label for="supplier-phone">SDT:</label>
+                <input
+                  type="text"
+                  id="supplier-phone"
+                  name="supplier-phone"
+                  required
+                />
+                <label for="supplier-address">Địa chỉ:</label>
+                <input
+                  type="text"
+                  id="supplier-address"
+                  name="supplier-address"
+                  required
+                />
+                <label for="supplier-date">Ngày nhập:</label>
+                <input
+                  type="date"
+                  id="supplier-date"
+                  name="supplier-date"
+                  required
+                />
+                <button type="submit">Tạo</button>
+              </form>
+            </div>
+          </app-modal>
+        </div>
+        <table class="suppliers-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Mã NCC</th>
+              <th>Tên NCC</th>
+              <th>SDT</th>
+              <th>Địa chỉ</th>
+              <th>Ngày nhập</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>01</td>
+              <td>Supplier A</td>
+              <td>12345678</td>
+              <td>123 Main St</td>
+              <td>2022-12-22</td>
+              <td>
+                <button class="edit-button">Sửa</button>
+              </td>
+              <td><button class="delete-button">Xóa</button></td>
+            </tr>
+
+            <tr>
+              <td>2</td>
+              <td>02</td>
+              <td>Supplier B</td>
+              <td>12345678</td>
+              <td>456 Elm St</td>
+              <td>2022-12-23</td>
+              <td>
+                <button class="edit-button">Sửa</button>
+              </td>
+              <td><button class="delete-button">Xóa</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal for creating new supplier -->
+
+    <script>
+      // Get the modal
+      var modal = document.getElementById("create-modal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("create-button");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close-button")[0];
+
+      // When the user clicks the button, open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Handle form submission
+      var form = document.getElementById("create-form");
+      form.onsubmit = function (event) {
+        event.preventDefault();
+        // Get form data
+        var id = document.getElementById("supplier-id").value;
+        var name = document.getElementById("supplier-name").value;
+        var phone = document.getElementById("supplier-phone").value;
+        var address = document.getElementById("supplier-address").value;
+        var date = document.getElementById("supplier-date").value;
+
+        // Add new row to the table
+        var table = document.querySelector(".suppliers-table tbody");
+        var row = table.insertRow();
+        row.innerHTML = `
+                <td>${table.rows.length + 1}</td>
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${phone}</td>
+                <td>${address}</td>
+                <td>${date}</td>
+                <td><button class="edit-button">Sửa</button></td>
+                <td><button class="delete-button">Xóa</button></td>
+            `;
+
+        // Close the modal
+        modal.style.display = "none";
+
+        // Clear the form
+        form.reset();
+      };
+    </script>
+  </body>
+</html>

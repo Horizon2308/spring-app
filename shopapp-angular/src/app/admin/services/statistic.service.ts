@@ -33,4 +33,30 @@ export class StatisticService {
   getLatestCustomers(): Observable<any> {
     return this.http.get(`${this.baseUrl}/users/count/get-latest-customers`);
   }
+
+  countStaffs(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/count/staffs`);
+  }
+
+  getTotalMoney(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/orders/count/get-total-money`);
+  }
+  countCancelledOrder(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/orders/count/cancelled-order`);
+  }
+  getPopularProducts(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/products/statistic/get-popular-products`);
+  }
+
+  getSuccessfulOrders(): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/orders/statistic/get-successful-orders`
+    );
+  }
+
+  getProductsIsSoldOut(): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/products/statistic/get-products-is-sold-out`
+    );
+  }
 }

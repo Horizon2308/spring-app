@@ -58,12 +58,14 @@
       <div class="app-sidebar__user">
         <img
           class="app-sidebar__user-avatar"
-          src="/images/hay.jpg"
+          src="{{ this.avatar }}"
           width="50px"
           alt="User Image"
         />
         <div>
-          <p class="app-sidebar__user-name"><b>Võ Trường</b></p>
+          <p class="app-sidebar__user-name">
+            <b>{{ user }}</b>
+          </p>
           <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
         </div>
       </div>
@@ -156,7 +158,9 @@
             <i class="icon bx bxs-user fa-3x"></i>
             <div class="info">
               <h4>Tổng Nhân viên</h4>
-              <p><b>26 nhân viên</b></p>
+              <p>
+                <b>{{ numberOfStaffs }} nhân viên</b>
+              </p>
             </div>
           </div>
         </div>
@@ -165,7 +169,9 @@
             <i class="icon bx bxs-purchase-tag-alt fa-3x"></i>
             <div class="info">
               <h4>Tổng sản phẩm</h4>
-              <p><b>8580 sản phẩm</b></p>
+              <p>
+                <b>{{ numberOfProducts }} sản phẩm</b>
+              </p>
             </div>
           </div>
         </div>
@@ -174,7 +180,9 @@
             <i class="icon fa-3x bx bxs-shopping-bag-alt"></i>
             <div class="info">
               <h4>Tổng đơn hàng</h4>
-              <p><b>457 đơn hàng</b></p>
+              <p>
+                <b>{{ numberOfOrders }} đơn hàng</b>
+              </p>
             </div>
           </div>
         </div>
@@ -194,7 +202,9 @@
             <i class="icon fa-3x bx bxs-chart"></i>
             <div class="info">
               <h4>Tổng thu nhập</h4>
-              <p><b>104.890.000 đ</b></p>
+              <p>
+                <b>{{ totalMoney | number : "1.2" }} đ</b>
+              </p>
             </div>
           </div>
         </div>
@@ -212,7 +222,9 @@
             <i class="icon fa-3x bx bxs-tag-x"></i>
             <div class="info">
               <h4>Hết hàng</h4>
-              <p><b>1 sản phẩm</b></p>
+              <p>
+                <b>{{ numberOfProductsSoldOut }} sản phẩm</b>
+              </p>
             </div>
           </div>
         </div>
@@ -221,7 +233,9 @@
             <i class="icon fa-3x bx bxs-receipt"></i>
             <div class="info">
               <h4>Đơn hàng hủy</h4>
-              <p><b>2 đơn hàng</b></p>
+              <p>
+                <b>{{ numberOfCancelledOrder }} đơn hàng</b>
+              </p>
             </div>
           </div>
         </div>
@@ -243,35 +257,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>71309005</td>
-                    <td>Bàn ăn gỗ Theresa</td>
-                    <td>5.600.000 đ</td>
-                    <td>Bàn ăn</td>
-                  </tr>
-                  <tr>
-                    <td>62304003</td>
-                    <td>Bàn ăn Vitali mặt đá</td>
-                    <td>33.235.000 đ</td>
-                    <td>Bàn ăn</td>
-                  </tr>
-                  <tr>
-                    <td>72109004</td>
-                    <td>Ghế làm việc Zuno</td>
-                    <td>3.800.000 đ</td>
-                    <td>Ghế gỗ</td>
-                  </tr>
-                  <tr>
-                    <td>83826226</td>
-                    <td>Tủ ly - tủ bát</td>
-                    <td>2.450.000 đ</td>
-                    <td>Tủ</td>
-                  </tr>
-                  <tr>
-                    <td>71304041</td>
-                    <td>Bàn ăn mở rộng Vegas</td>
-                    <td>21.550.000 đ</td>
-                    <td>Bàn thông minh</td>
+                  <tr *ngFor="let product of popularProducts">
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price | number : "1.2" }} đ</td>
+                    <td>{{ product.category.name }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -297,54 +287,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>MD0837</td>
-                    <td>Triệu Thanh Phú</td>
-                    <td>Ghế làm việc Zuno, Bàn ăn gỗ Theresa</td>
-                    <td>2 sản phẩm</td>
-                    <td>9.400.000 đ</td>
-                  </tr>
-                  <tr>
-                    <td>MĐ8265</td>
-                    <td>Nguyễn Thị Ngọc Cẩm</td>
-                    <td>Ghế ăn gỗ Lucy màu trắng</td>
-                    <td>1 sản phẩm</td>
-                    <td>3.800.000 đ</td>
-                  </tr>
-                  <tr>
-                    <td>MT9835</td>
-                    <td>Đặng Hoàng Phúc</td>
-                    <td>
-                      Giường ngủ Jimmy, Bàn ăn mở rộng cao cấp Dolas, Ghế làm
-                      việc Zuno
-                    </td>
-                    <td>3 sản phẩm</td>
-                    <td>40.650.000 đ</td>
-                  </tr>
-                  <tr>
-                    <td>ER3835</td>
-                    <td>Nguyễn Thị Mỹ Yến</td>
-                    <td>Bàn ăn mở rộng Gepa</td>
-                    <td>1 sản phẩm</td>
-                    <td>16.770.000 đ</td>
-                  </tr>
-                  <tr>
-                    <td>AL3947</td>
-                    <td>Phạm Thị Ngọc</td>
-                    <td>Bàn ăn Vitali mặt đá, Ghế ăn gỗ Lucy màu trắng</td>
-                    <td>2 sản phẩm</td>
-                    <td>19.770.000 đ</td>
-                  </tr>
-                  <tr>
-                    <td>QY8723</td>
-                    <td>Ngô Thái An</td>
-                    <td>Giường ngủ Kara 1.6x2m</td>
-                    <td>1 sản phẩm</td>
-                    <td>14.500.000 đ</td>
+                  <tr *ngFor="let order of orders">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.full_name }}</td>
+                    <td>{{ order.listOfProductName }}</td>
+                    <td>{{ order.quantity }} sản phẩm</td>
+                    <td>{{ order.total_money | number : "1.2" }} đ</td>
                   </tr>
                   <tr>
                     <th colspan="4">Tổng cộng:</th>
-                    <td>104.890.000 đ</td>
+                    <td>{{ totalMoney | number : "1.2" }} đ</td>
                   </tr>
                 </tbody>
               </table>
@@ -372,16 +324,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>83826226</td>
-                    <td>Tủ ly - tủ bát</td>
+                  <tr *ngFor="let product of productsIsSoldOut">
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
                     <td>
-                      <img src="/img-sanpham/tu.jpg" alt="" width="100px;" />
+                      <img src="{{ product.url }}" alt="" width="100px;" />
                     </td>
-                    <td>0</td>
+                    <td>{{ product.quantity }}</td>
                     <td><span class="badge bg-danger">Hết hàng</span></td>
-                    <td>2.450.000 đ</td>
-                    <td>Tủ</td>
+                    <td>{{ product.price | number : "1.2" }} đ</td>
+                    <td>{{ product.category.name }}</td>
                   </tr>
                 </tbody>
               </table>

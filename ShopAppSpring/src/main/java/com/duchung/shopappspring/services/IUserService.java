@@ -36,5 +36,7 @@ public interface IUserService {
 
     int countCustomers() throws DataNotFoundException;
 
+    int countStaffs() throws DataNotFoundException;
+
     List<CustomerStatisticResponse> getLatestCustomers();
 }

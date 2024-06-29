@@ -28,8 +28,9 @@ export class AdminGuard {
     const isUserIdValid = this.tokenService.getUserId() > 0;
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
     const isAdmin = this.userResponse?.role.name == 'ADMIN';
+    const isManager = this.userResponse?.role.name == 'MANAGER';
     debugger;
-    if (!isTokenExpired && isUserIdValid && isAdmin) {
+    if (!isTokenExpired && isUserIdValid && (isAdmin || isManager)) {
       return true;
     } else {
       // Nếu không authenticated, bạn có thể redirect hoặc trả về một UrlTree khác.

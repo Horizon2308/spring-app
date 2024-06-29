@@ -23,4 +23,7 @@ public interface IOrderService {
     OrderResponse updateStatus(Long orderId, String newStatus) throws DataNotFoundException, InvalidParameterException;
     int countOrders();
     List<OrderStatisticResponse> getLatestOrder();
+    double getTotalMoney();
+    int countCancelledOrder();
+    List<OrderResponse> getSuccessfulOrder();
 }

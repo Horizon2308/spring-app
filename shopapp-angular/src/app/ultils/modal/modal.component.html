@@ -1,0 +1,6 @@
+<div class="modal" [ngClass]="{'show': showModal}" (click)="onBackdropClick($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close-button" (click)="closeModal()">&times;</span>
+    <ng-content></ng-content>
+  </div>
+</div>

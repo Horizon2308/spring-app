@@ -22,6 +22,14 @@ import { BlogComponent } from './user/components/blog/blog.component';
 import { CustomerManagermentComponent } from './admin/components/customer-managerment/customer-managerment.component';
 import { CalendarComponent } from './admin/components/calendar/calendar.component';
 import { IncomeManagermentComponent } from './admin/components/income-managerment/income-managerment.component';
+import { RawProductsManagerComponent } from './manager/components/raw-products-manager/raw-products-manager.component';
+import { TransactionDocumentManagerComponent } from './manager/components/import-transaction-document/transaction-document-manager/transaction-document-manager.component';
+import { TransactionDocumentDetailComponent } from './manager/components/import-transaction-document/transaction-document-detail/transaction-document-detail.component';
+import { AddTransactionDocumentComponent } from './manager/components/import-transaction-document/add-transaction-document/add-transaction-document.component';
+import { ProviderManagerComponent } from './manager/components/provider-manager/provider-manager.component';
+import { StoreManagerComponent } from './manager/components/store-manager/store-manager.component';
+import { ExportTransactionDocumentComponent } from './manager/components/export/export-transaction-document/export-transaction-document.component';
+import { AddExportTransactionDocumentComponent } from './manager/components/export/add-export-transaction-document/add-export-transaction-document.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -90,6 +98,51 @@ const routes: Routes = [
   {
     path: 'admin/income',
     component: IncomeManagermentComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/raw-products-manager',
+    component: RawProductsManagerComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/transaction-document-manager',
+    component: TransactionDocumentManagerComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/transaction-document-details/:id',
+    component: TransactionDocumentDetailComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/transaction-document/import',
+    component: AddTransactionDocumentComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/provider-manager',
+    component: ProviderManagerComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/store-manager',
+    component: StoreManagerComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/export-transaction-document',
+    component: ExportTransactionDocumentComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/add-export-transaction-document',
+    component: AddExportTransactionDocumentComponent,
+    canActivate: [AdminGuardFn],
+  },
+  {
+    path: 'manager/export-transaction-document-details/:id',
+    component: TransactionDocumentDetailComponent,
     canActivate: [AdminGuardFn],
   },
 ];

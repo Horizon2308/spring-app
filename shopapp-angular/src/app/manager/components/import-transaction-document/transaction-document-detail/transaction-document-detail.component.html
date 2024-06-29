@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết phiếu nhập</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container" id="content">
+        <div class="GRN">
+            <div class="logo">
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                fill="currentColor"
+                class="bi bi-flower2"
+                viewBox="0 0 16 16"
+                >
+                <path
+                    d="M8 16a4 4 0 0 0 4-4 4 4 0 0 0 0-8 4 4 0 0 0-8 0 4 4 0 1 0 0 8 4 4 0 0 0 4 4m3-12q0 .11-.03.247c-.544.241-1.091.638-1.598 1.084A3 3 0 0 0 8 5c-.494 0-.96.12-1.372.331-.507-.446-1.054-.843-1.597-1.084A1 1 0 0 1 5 4a3 3 0 0 1 6 0m-.812 6.052A3 3 0 0 0 11 8a3 3 0 0 0-.812-2.052c.215-.18.432-.346.647-.487C11.34 5.131 11.732 5 12 5a3 3 0 1 1 0 6c-.268 0-.66-.13-1.165-.461a7 7 0 0 1-.647-.487m-3.56.617a3 3 0 0 0 2.744 0c.507.446 1.054.842 1.598 1.084q.03.137.03.247a3 3 0 1 1-6 0q0-.11.03-.247c.544-.242 1.091-.638 1.598-1.084m-.816-4.721A3 3 0 0 0 5 8c0 .794.308 1.516.812 2.052a7 7 0 0 1-.647.487C4.66 10.869 4.268 11 4 11a3 3 0 0 1 0-6c.268 0 .66.13 1.165.461.215.141.432.306.647.487M8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
+                />
+            </svg>&nbsp;Flower SupperStore
+            </div>
+            <h2>PHIẾU NHẬP KHO SỐ</h2>
+            <div class="time">Ngày {{day}} tháng {{month}} năm {{year}}</div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã hàng hóa</th>
+                            <th>Tên hàng hóa</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Nhà cung cấp</th>
+                            <th>Thời gian nhập</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTable">
+                        <tr *ngFor="let transactionDocumentDetail of transactionDocumentDetails">
+                            <td>{{index + 1}}</td>
+                            <td>{{transactionDocumentDetail.id}}</td>
+                            <td>{{transactionDocumentDetail.raw_product_name}}</td>
+                            <td>{{transactionDocumentDetail.price | number : "1.2"}} đ</td>
+                            <td>{{transactionDocumentDetail.quantity}}</td>
+                            <td>{{transactionDocumentDetail.provider_name}}</td>
+                            <td>{{transactionDocumentDetail.created_at}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6">Thành tiền:</th>
+                            <th>{{totalPrice | number : "1.2"}} đ</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="empty"></div>
+            <div>
+                <table class="signature-table">
+                    <tr>
+                        <td>Người lập phiếu</td>
+                        <td>Người giao hàng</td>
+                    </tr>
+                    <tr>
+                        <td>(Ký họ tên)</td>
+                        <td>(Ký họ tên)</td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="empty"></div>
+            <div>
+                <button id="printButton" onclick="generatePDF()">In PDF</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+
+            const printButton = document.getElementById('printButton');
+            printButton.style.visibility = 'hidden';  // Ẩn nút trước khi chụp ảnh
+
+            const content = document.getElementById('content');
+            const canvas = await html2canvas(content, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('phieu-nhap.pdf');
+
+            printButton.style.visibility = 'visible';  // Hiển thị lại nút sau khi chụp ảnh
+        }
+    </script>
+</body>
+</html>

@@ -231,4 +231,17 @@ public class ProductController {
     public ResponseEntity<?> countProductsSoldOut() {
         return ResponseEntity.ok(new SuccessResponse<>(productService.countProductsSoldOut()));
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/statistic/get-popular-products")
+    public ResponseEntity<?> getPopularProducts() {
+        return ResponseEntity.ok(new SuccessResponse<>(productService.findTop4PopularProducts()));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/statistic/get-products-is-sold-out")
+    public ResponseEntity<?> getProductsIsSoldOut() {
+        return ResponseEntity.ok(new SuccessResponse<>(productService.getProductsIsSoldOut()));
+    }
+
 }

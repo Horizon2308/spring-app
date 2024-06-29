@@ -193,6 +193,15 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public int countStaffs() throws DataNotFoundException {
+        Role adminRole = roleRepository.findById(1L)
+                .orElseThrow(() -> new DataNotFoundException("Something wrong!"));
+        Role staffRole = roleRepository.findById(3L)
+                .orElseThrow(() -> new DataNotFoundException("Something wrong!"));
+        return userRepository.countAllByRole(adminRole) + userRepository.countAllByRole(staffRole);
+    }
+
+    @Override
     public List<CustomerStatisticResponse> getLatestCustomers() {
         return userRepository.findTop4ByOrderByIdDesc().stream().map(this::convertToCustomerStatistic).toList();
     }

@@ -64,3 +64,84 @@ CREATE TABLE orders_in_counter_details (
     number_of_products INT CHECK(number_of_products > 0),
     total_money FLOAT CHECK(total_money >= 0)
 );
+
+CREATE TABLE likes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    comment_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE
+);
+
+ALTER TABLE comments ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+ALTER TABLE comments ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+"user_id": 1,
+  	"content": "You look like a fuking bitch",
+  	"likes": 0,
+  	"parent_id": 0,
+  	"product_id": 1
+
+CREATE TABLE raw_products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    quantity INT NOT NULL,
+    price FLOAT NOT NULL,
+    note VARCHAR(500) DEFAULT '',
+    provider_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (provider_id) REFERENCES providers(id)
+);
+
+ALTER TABLE export_transaction_document_details
+ADD COLUMN transaction_document_id INT;
+
+ALTER TABLE export_transaction_document_details
+ADD CONSTRAINT fk_transaction_document_id
+FOREIGN KEY (transaction_document_id) REFERENCES transaction_documents(id)
+ON DELETE CASCADE;
+
+CREATE TABLE stores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(10) NOT NULL,
+    address VARCHAR(200) DEFAULT '',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE transaction_documents (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    user_id INT NOT NULL,
+    total_products INT NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE transaction_document_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    raw_product_name VARCHAR(200),
+    quantity INT NOT NULL,
+    price FLOAT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    provider_id INT NOT NULL,
+    FOREIGN KEY (provider_id) REFERENCES providers(id)
+);
+
+CREATE TABLE export_transaction_document_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    raw_product_name VARCHAR(200),
+    quantity INT NOT NULL,
+    price FLOAT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    store_id INT NOT NULL,
+    FOREIGN KEY (store_id) REFERENCES stores(id)
+);

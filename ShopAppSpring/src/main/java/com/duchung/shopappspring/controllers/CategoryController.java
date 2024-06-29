@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,7 @@ public class CategoryController {
                 .ok()
                 .body(new SuccessResponse<>(categoriesResponse, "Get all categories successfully!"));
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategory(@PathVariable("id") Long categoryId) {

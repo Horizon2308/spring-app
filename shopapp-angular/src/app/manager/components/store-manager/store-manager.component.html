@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh Sách Cửa Hàng</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-flower2"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 16a4 4 0 0 0 4-4 4 4 0 0 0 0-8 4 4 0 0 0-8 0 4 4 0 1 0 0 8 4 4 0 0 0 4 4m3-12q0 .11-.03.247c-.544.241-1.091.638-1.598 1.084A3 3 0 0 0 8 5c-.494 0-.96.12-1.372.331-.507-.446-1.054-.843-1.597-1.084A1 1 0 0 1 5 4a3 3 0 0 1 6 0m-.812 6.052A3 3 0 0 0 11 8a3 3 0 0 0-.812-2.052c.215-.18.432-.346.647-.487C11.34 5.131 11.732 5 12 5a3 3 0 1 1 0 6c-.268 0-.66-.13-1.165-.461a7 7 0 0 1-.647-.487m-3.56.617a3 3 0 0 0 2.744 0c.507.446 1.054.842 1.598 1.084q.03.137.03.247a3 3 0 1 1-6 0q0-.11.03-.247c.544-.242 1.091-.638 1.598-1.084m-.816-4.721A3 3 0 0 0 5 8c0 .794.308 1.516.812 2.052a7 7 0 0 1-.647.487C4.66 10.869 4.268 11 4 11a3 3 0 0 1 0-6c.268 0 .66.13 1.165.461.215.141.432.306.647.487M8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
+          />
+        </svg>
+        <h1>Flower SupperStore</h1>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a routerLink="/manager/raw-products-manager">Danh sách hàng hóa</a>
+          </li>
+          <li>
+            <a routerLink="/manager/transaction-document-manager"
+              >Nhập hàng hóa</a
+            >
+          </li>
+          <li>
+            <a routerLink="/manager/export-transaction-document"
+              >Xuất hàng hóa</a
+            >
+          </li>
+          <li><a routerLink="/manager/provider-manager">Danh sách NCC</a></li>
+          <li>
+            <a class="active" routerLink="/manager/store-manager"
+              >Danh sách Cửa hàng</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <div class="logout">
+        <a href="/log-in/log-in.html">Log out</a>
+      </div>
+    </div>
+    <div class="main-content">
+      <header>
+        <input
+          type="text"
+          placeholder="Tìm kiếm..."
+          [(ngModel)]="keyword"
+          (change)="searchProducts()"
+        />
+        <div class="user-info">
+          <span>Username</span>
+          <img src="https://via.placeholder.com/40" alt="User" />
+        </div>
+      </header>
+      <div class="content">
+        <h2>Danh Sách Cửa Hàng</h2>
+        <div class="filters">
+          <select [(ngModel)]="sortOption">
+            <option [value]="1">Thời gian</option>
+            <option [value]="2">Tên cửa hàng</option>
+          </select>
+          <button id="create-button" (click)="onAddModalOpen()">Tạo mới</button>
+          <app-modal [(showModal)]="isAddModalOpen" (close)="onAddModalClose()">
+            <div class="modal-content">
+              <span class="close-button">&times;</span>
+              <h2>Tạo mới</h2>
+              <form id="create-form">
+                <label for="store-name">Tên CH:</label>
+                <input
+                  type="text"
+                  id="store-name"
+                  name="name"
+                  [(ngModel)]="storeDTO.name"
+                  required
+                />
+                <label for="store-phone">SDT:</label>
+                <input
+                  type="text"
+                  id="store-phone"
+                  name="phone_number"
+                  [(ngModel)]="storeDTO.phone_number"
+                  required
+                />
+                <label for="store-address">Địa chỉ:</label>
+                <input
+                  type="text"
+                  id="store-address"
+                  name="address"
+                  [(ngModel)]="storeDTO.address"
+                  required
+                />
+                <button type="submit" (click)="addStore()">Tạo</button>
+              </form>
+            </div>
+          </app-modal>
+        </div>
+        <table class="stores-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Mã CH</th>
+              <th>Tên CH</th>
+              <th>SDT</th>
+              <th>Địa chỉ</th>
+              <th>Ngày nhập</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let store of stores; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ store.id }}</td>
+              <td>{{ store.name }}</td>
+              <td>{{ store.phone_number }}</td>
+              <td>{{ store.address }}</td>
+              <td>{{ store.created_at }}</td>
+              <td>
+                <button
+                  class="edit-button"
+                  (click)="onUpdateModalOpen(store.id)"
+                >
+                  Sửa
+                </button>
+              </td>
+              <app-modal
+                [(showModal)]="isUpdateModelOpen"
+                (close)="onUpdateModalClose()"
+              >
+                <div class="modal-content">
+                  <span class="close-button">&times;</span>
+                  <h2>Sửa cửa hàng</h2>
+                  <form id="create-form">
+                    <label for="store-name">Tên CH:</label>
+                    <input
+                      type="text"
+                      id="store-name"
+                      name="name"
+                      [value]="updatedStoreDTO.name"
+                      [(ngModel)]="updatedStoreDTO.name"
+                      required
+                    />
+                    <label for="store-phone">SDT:</label>
+                    <input
+                      type="text"
+                      id="store-phone"
+                      name="phone_number"
+                      [(ngModel)]="updatedStoreDTO.phone_number"
+                      required
+                    />
+                    <label for="store-address">Địa chỉ:</label>
+                    <input
+                      type="text"
+                      id="store-address"
+                      name="address"
+                      [(ngModel)]="updatedStoreDTO.address"
+                      required
+                    />
+                    <button type="submit" (click)="updateStore()">
+                      Cập nhật
+                    </button>
+                  </form>
+                </div>
+              </app-modal>
+              <td>
+                <button class="delete-button" (click)="deleteStore(store.id)">
+                  Xóa
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="create-modal" class="modal"></div>
+
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item" *ngIf="currentPage > 0">
+            <a class="page-link" (click)="onPageChange(0)">First</a>
+          </li>
+          <li class="page-item" *ngIf="currentPage > 0">
+            <a class="page-link" (click)="onPageChange(currentPage - 1)">
+              <i class="fa fa-chevron-left"></i>
+            </a>
+          </li>
+          <ng-container *ngFor="let page of visiblePages">
+            <li
+              class="page-item"
+              [ngClass]="{ active: page === currentPage + 1 }"
+            >
+              <a class="page-link" (click)="onPageChange(page - 1)">{{
+                page
+              }}</a>
+            </li>
+          </ng-container>
+          <li class="page-item" *ngIf="currentPage < totalPages - 1">
+            <a class="page-link" (click)="onPageChange(currentPage + 1)">
+              <i class="fa fa-chevron-right"></i>
+            </a>
+          </li>
+          <li class="page-item" *ngIf="currentPage < totalPages - 1">
+            <a class="page-link" (click)="onPageChange(totalPages - 1)">Last</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <script>
+      // Get the modal
+      var modal = document.getElementById("create-modal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("create-button");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close-button")[0];
+
+      // When the user clicks the button, open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Handle form submission
+      var form = document.getElementById("create-form");
+      form.onsubmit = function (event) {
+        event.preventDefault();
+        // Get form data
+        var id = document.getElementById("store-id").value;
+        var name = document.getElementById("store-name").value;
+        var phone = document.getElementById("store-phone").value;
+        var address = document.getElementById("store-address").value;
+        var date = document.getElementById("store-date").value;
+
+        // Add new row to the table
+        var table = document.querySelector(".stores-table tbody");
+        var row = table.insertRow();
+        row.innerHTML = `
+                <td>${table.rows.length + 1}</td>
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${phone}</td>
+                <td>${address}</td>
+                <td>${date}</td>
+                <td><button class="edit-button">Sửa</button></td>
+                <td><button class="delete-button">Xóa</button></td>
+            `;
+
+        // Close the modal
+        modal.style.display = "none";
+
+        // Clear the form
+        form.reset();
+      };
+    </script>
+  </body>
+</html>

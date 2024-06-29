@@ -90,7 +90,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         for (var bypassToken : bypassTokens) {
             String bypassTokenPath = bypassToken.getFirst();
             String bypassTokenMethod = bypassToken.getSecond();
-            if (requestPath.contains("/products/count") || requestPath.contains("/products/count/sold-out")) {
+            if (requestPath.contains("/products/count") || requestPath.contains("/products/count/sold-out")
+                || requestPath.contains("/products/statistic")) {
                 return false;
             }
             if (requestPath.contains(bypassTokenPath)
@@ -100,5 +101,4 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
         return false;
     }
-
 }
