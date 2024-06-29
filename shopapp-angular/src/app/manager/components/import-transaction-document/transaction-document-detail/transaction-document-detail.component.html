@@ -48,7 +48,7 @@
                             <td>{{transactionDocumentDetail.price | number : "1.2"}} đ</td>
                             <td>{{transactionDocumentDetail.quantity}}</td>
                             <td>{{transactionDocumentDetail.provider_name}}</td>
-                            <td>{{transactionDocumentDetail.created_at}}</td>
+                            <td>{{transactionDocumentDetail.created_at | ddMmYYYYDate}}</td>
                         </tr>
                     </tbody>
                     <tfoot>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExportTransactionDocumentDetails } from 'src/app/manager/models/export.transaction.document';
 import { TransactionDocumentDetails } from 'src/app/manager/models/transaction.document.details';
@@ -9,7 +9,7 @@ import { TransactionDocumentService } from 'src/app/manager/services/transaction
   templateUrl: './export-transaction-document-details.component.html',
   styleUrls: ['./export-transaction-document-details.component.scss'],
 })
-export class ExportTransactionDocumentDetailsComponent {
+export class ExportTransactionDocumentDetailsComponent implements OnInit {
   transactionDocumentId: number = 0;
   transactionDocumentDetails: ExportTransactionDocumentDetails[] = [];
   today = new Date();

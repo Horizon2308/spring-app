@@ -48,6 +48,7 @@ import { StoreManagerComponent } from './manager/components/store-manager/store-
 import { ExportTransactionDocumentComponent } from './manager/components/export/export-transaction-document/export-transaction-document.component';
 import { AddExportTransactionDocumentComponent } from './manager/components/export/add-export-transaction-document/add-export-transaction-document.component';
 import { ExportTransactionDocumentDetailsComponent } from './manager/components/export/export-transaction-document-details/export-transaction-document-details.component';
+import { DdMmYYYYDatePipe } from './dd-mm-yyyy-date.pipe';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { ExportTransactionDocumentDetailsComponent } from './manager/components/
     ExportTransactionDocumentComponent,
     AddExportTransactionDocumentComponent,
     ExportTransactionDocumentDetailsComponent,
+    DdMmYYYYDatePipe,
   ],
   imports: [
     BrowserModule,

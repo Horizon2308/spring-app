@@ -1,5 +1,6 @@
 package com.duchung.shopappspring.domains;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -19,10 +20,12 @@ public class BaseEntity {
 
     @Column(name = "created_at")
     @JsonProperty("created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     protected LocalDateTime createAt;
 
     @Column(name = "updated_at")
     @JsonProperty("updated_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     protected LocalDateTime updateAt;
 
     @PrePersist

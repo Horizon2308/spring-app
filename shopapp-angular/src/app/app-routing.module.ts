@@ -30,6 +30,7 @@ import { ProviderManagerComponent } from './manager/components/provider-manager/
 import { StoreManagerComponent } from './manager/components/store-manager/store-manager.component';
 import { ExportTransactionDocumentComponent } from './manager/components/export/export-transaction-document/export-transaction-document.component';
 import { AddExportTransactionDocumentComponent } from './manager/components/export/add-export-transaction-document/add-export-transaction-document.component';
+import { ExportTransactionDocumentDetailsComponent } from './manager/components/export/export-transaction-document-details/export-transaction-document-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -142,7 +143,7 @@ const routes: Routes = [
   },
   {
     path: 'manager/export-transaction-document-details/:id',
-    component: TransactionDocumentDetailComponent,
+    component: ExportTransactionDocumentDetailsComponent,
     canActivate: [AdminGuardFn],
   },
 ];

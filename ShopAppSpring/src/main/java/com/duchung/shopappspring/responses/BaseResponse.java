@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseResponse {
+
+    
     protected LocalDateTime createAt;
     protected LocalDateTime updateAt;
 }

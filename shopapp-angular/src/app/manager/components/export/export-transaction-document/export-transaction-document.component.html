@@ -91,15 +91,20 @@
                   let i = index
                 "
               >
-                <td>{{i + 1}}</td>
-                <td>{{transactionDocument.id}}</td>
-                <td>{{transactionDocument.name}}</td>
-                <td>{{transactionDocument.total_products}}</td>
-                <td>{{transactionDocument.username}}</td>
-                <td>{{transactionDocument.created_at}}</td>
+                <td>{{ i + 1 }}</td>
+                <td>{{ transactionDocument.id }}</td>
+                <td>{{ transactionDocument.name }}</td>
+                <td>{{ transactionDocument.total_products }}</td>
+                <td>{{ transactionDocument.username }}</td>
+                <td>{{ transactionDocument.created_at | ddMmYYYYDate }}</td>
                 <td>
                   <button type="detail" class="detail-button">
-                    <a href="/Outbound/ChitietPX/CTPX.html">Chi tiết</a>
+                    <a
+                      (click)="
+                        transactionDocumentDetailsClick(transactionDocument.id)
+                      "
+                      >Chi tiết</a
+                    >
                   </button>
                 </td>
                 <td>

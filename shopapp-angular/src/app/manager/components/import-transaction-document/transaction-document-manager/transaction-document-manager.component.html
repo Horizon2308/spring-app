@@ -100,7 +100,7 @@
                 <td>{{ transactionDocument.name }}</td>
                 <td>{{ transactionDocument.total_products }}</td>
                 <td>{{ transactionDocument.username }}</td>
-                <td>{{ transactionDocument.created_at }}</td>
+                <td>{{ transactionDocument.created_at | ddMmYYYYDate }}</td>
                 <td>
                   <button
                     type="detail"

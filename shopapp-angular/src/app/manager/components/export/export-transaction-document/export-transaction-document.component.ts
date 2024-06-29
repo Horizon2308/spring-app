@@ -97,6 +97,6 @@ export class ExportTransactionDocumentComponent implements OnInit {
   }
 
   transactionDocumentDetailsClick(id: number) {
-    this.router.navigate(['/manager/transaction-document-details', id]);
+    this.router.navigate(['/manager/export-transaction-document-details', id]);
   }
 }

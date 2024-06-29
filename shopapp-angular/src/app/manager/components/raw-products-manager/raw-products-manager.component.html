@@ -99,8 +99,8 @@
               <td>{{ rawProduct.quantity }}</td>
               <!-- <td><a href="#">Image</a></td> -->
               <td>{{ rawProduct.provider.provider_name }}</td>
-              <td>{{ rawProduct.created_at }}</td>
-              <td>{{ rawProduct.updated_at }}</td>
+              <td>{{ rawProduct.created_at | ddMmYYYYDate }}</td>
+              <td>{{ rawProduct.updated_at | ddMmYYYYDate }}</td>
               <td>{{ rawProduct.note }}</td>
             </tr>
           </tbody>
