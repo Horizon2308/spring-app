@@ -28,10 +28,11 @@
               type="text"
               [(ngModel)]="searchTerm"
               (input)="onSearch()"
-              placeholder="Search..."
+              placeholder="Tìm kiếm..."
               class="search-input"
             />
-            <span class="search-icon">&#x1F50D;</span>
+            <span class="search-icon"></span>
+
           </div>
           <div class="dropdown" [ngClass]="{ show: showDropDown }">
             <ul class="dropdown-list">

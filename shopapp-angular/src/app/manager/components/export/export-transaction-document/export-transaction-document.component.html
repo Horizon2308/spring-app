@@ -50,7 +50,7 @@
     </div>
     <div class="main-content">
       <header>
-        <input type="text" placeholder="Search..." />
+        <input type="text" placeholder="Tìm kiếm..." />
         <div class="user-info">
           <span>Username</span>
           <img src="https://via.placeholder.com/40" alt="User" />
@@ -98,14 +98,15 @@
                 <td>{{ transactionDocument.username }}</td>
                 <td>{{ transactionDocument.created_at | ddMmYYYYDate }}</td>
                 <td>
-                  <button type="detail" class="detail-button">
-                    <a
-                      (click)="
-                        transactionDocumentDetailsClick(transactionDocument.id)
-                      "
-                      >Chi tiết</a
-                    >
-                  </button>
+                  <button
+                  type="detail"
+                  class="detail-button"
+                  (click)="
+                    transactionDocumentDetailsClick(transactionDocument.id)
+                  "
+                >
+                  Chi tiết
+                </button>
                 </td>
                 <td>
                   <button type="delete" class="delete-button">Xóa</button>

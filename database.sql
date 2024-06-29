@@ -129,10 +129,12 @@ CREATE TABLE transaction_document_details (
     raw_product_name VARCHAR(200),
     quantity INT NOT NULL,
     price FLOAT NOT NULL,
+    transaction_document_id INT;
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     provider_id INT NOT NULL,
-    FOREIGN KEY (provider_id) REFERENCES providers(id)
+    FOREIGN KEY (provider_id) REFERENCES providers(id),
+    FOREIGN KEY (transaction_document_id) REFERENCES transaction_documents(id) ON DELETE CASCADE
 );
 
 CREATE TABLE export_transaction_document_details (
@@ -140,8 +142,10 @@ CREATE TABLE export_transaction_document_details (
     raw_product_name VARCHAR(200),
     quantity INT NOT NULL,
     price FLOAT NOT NULL,
+    transaction_document_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     store_id INT NOT NULL,
-    FOREIGN KEY (store_id) REFERENCES stores(id)
+    FOREIGN KEY (store_id) REFERENCES stores(id),
+    FOREIGN KEY (transaction_document_id) REFERENCES transaction_documents(id) ON DELETE CASCADE
 );
